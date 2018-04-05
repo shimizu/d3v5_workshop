@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<style>
+html, body {
+    width: 100%;
+    height: 100%;
+}
+   
+svg {
+    width:900px;
+    height: 900px;
+    background-color:#ccc;
+}
+
+#btn {
+    display: block;
+}
+
+.bar {
+    color:white;
+    padding-left:0.5em;
+    padding-top: 0.5em;
+    margin-top:4px;
+    
+}
+
+</style>    
+
+</head>
+<body>
+<h2>web開発者ツールのコンソールにアップデートされたデータが表示されるので、エレメントと比較してみてください</h2>
+<button id="btn">data update</button>    
+<div id="stage"></div>
+
+
+<script src="//unpkg.com/d3@4.12.2/build/d3.min.js"></script>    
+<script>
+/*
+ *　データを元にエレメントの差分レンダリングを行うサンプルです。
+ */
+
+ 
+//1〜10個のデータをランダムに生成する 
+var rnd10 = function(){
+    return ~~(Math.random() * 9) + 1;
+}
+var generateData = function(){
+    return d3.range(rnd10()).map(function(i){
+        return {id:i, value:~~(Math.random() * 600 + 100)}    
+    });
+}
+
+
+    
+    
+d3.select("#btn").on("click", render)    
+
+
+
+function render(){
+    //変化をわかりやすくするためにランジションを設定する
+    var t = d3.transition().duration(1000);
+    
+    
+    var data = generateData(); //データを生成
+    
+    console.log("update data", data);
+    
+    var stage = d3.select("#stage");
+   
+   
+   //update    
+    var updateDIV = stage.selectAll(".bar") //すでにDOMに存在しているエレメントのセレクターを返す
+       .data(data, function(d){ return d.id }) //新しいデータをエレメントにバインドし、データのidをキーにして差分を計算する
+        
+    //enter
+    var enterDiV = updateDIV.enter() //データの個数に対して足りていない(まだDOMに存在していない)エレメントのセレクターを返す
+        .append("div")  //足りないエレメントを追加する
+        .attr("class", "bar") 
+     
+     //exit 
+     var exitDIV = updateDIV.exit(); //データの個数に対して多すぎるエレメントのセレクターを返す
+     
+    
+
+    //すでに存在しているエレメント、新たに追加されるエレメント、削除されるエレメントの背景色を色分けする
+    updateDIV.transition(t).style("background-color", "green") //更新されるエレメントは緑に
+    enterDiV.transition(t).style("background-color", "blue") // 新たに追加されるエレメントは青に
+    exitDIV.transition(t).style("background-color", "red") //削除されるエレメントは赤に
+        .on("end", function(){
+            d3.select(this).remove(); //トランジションが終わったらDOMから削除する
+        })
+    
+    
+    //追加したdiv要素のスタイルを設定
+    updateDIV.merge(enterDiV)
+        .style("width", function(d){ return d.value + "px"}) //ここではデータのvalue値をそのままwidthのサイズに適用する
+        .style("height", "50px")
+        .text(function(d){ return "id:" + d.id + " value:" + d.value}) //エレメントの中にテキストを配置する(innerText)
+        
+    
+
+}
+    
+</script>
+
+</body>
+</html>

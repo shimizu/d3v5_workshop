@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title>FizzBuzz Table</title>
+
+<style>
+body {
+	background-color:white;
+}
+td {
+    color:gray;
+	padding:2px;
+	text-align:center;
+	border-radius:4px;
+	border: 1px solid gray;
+}
+
+.Fizz {
+	color:#ff6666;
+}
+.Buzz {
+	color:#6666ff;
+}
+.FizzBuzz {
+	color:#ff66ff;
+}
+    
+</style>
+</head>
+
+<body>
+<input id="number" type="number" value="100" max="10000"><button id="run">run</button>   
+<table id="table"></table>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/4.1.1/d3.min.js"></script>    
+<script>
+!(function(){
+	"use strict"
+
+	d3.select("#run").on("click", function(){
+		var number = +document.querySelector("#number").value; 
+		renderTable(number);
+	});
+	  
+	function renderTable(n){
+		var START = 1,END = n + 1;
+	
+		var FizzBuzz = function(num){
+			if(num%15==0) return 'FizzBuzz';
+			if(num%5==0) return 'Buzz';
+			if(num%3==0) return 'Fizz';
+			return num;   
+		}
+				   
+		var list = d3.range(START,END).map(FizzBuzz);
+	
+		
+		var dataSet = [];
+		for(var i=0; i < END; i+=10){
+			dataSet.push( list.slice(i, i+10) )
+		}
+	
+		var table = d3.select('#table')
+
+		var tr = table.selectAll('tr')
+			.data(dataSet)
+				
+		var newTr = tr.enter().append('tr')
+		
+		tr.exit().remove()	
+	
+		var td = tr.merge(newTr).selectAll('td')
+			.data(function(d){ return d })
+			
+		td.enter().append('td')
+			.text(function(d){ return d })
+			.attr("class", function(d){ return (isNaN(+d)) ? d : null ; })
+		 
+		td.exit().remove()
+	}
+    	
+	
+}());
+
+</script>    
+</body>
+</html>

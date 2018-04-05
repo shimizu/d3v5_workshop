@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<style>
+html, body {
+    width: 100%;
+    height: 100%;
+}
+   
+svg {
+    width:900px;
+    height: 900px;
+    background-color:#ccc;
+}
+
+#btn {
+    display: block;
+}
+</style>    
+
+</head>
+<body>
+<button id="btn">append</button>    
+<svg id="stage"></svg>
+
+
+<script src="//unpkg.com/d3@5.0.0/dist/d3.min.js"></script>    
+<script>    
+/*
+ * 各エレメントの属性値をアップデートする際にトランジションを設定するサンプルです。
+ */
+
+    
+d3.select("#btn").on("click", appendElement)    
+
+
+
+function appendElement(){
+    //svgエレメントを洗濯
+    var svg = d3.select("#stage");
+    
+    
+    //svg要素にcircle要素を追加する
+    var circle = svg.append("circle");
+    
+    //circle要素がアペンドされるときに 初期座標(x:0, y:0)から、(x:100, y:100)の位置にトランジションさせる
+    circle
+        .attr("cx", 0)
+        .attr("cy", 0)
+        .attr("r", 50)
+        .attr("fill", "red")
+        .attr("stroke", "blue")
+        .attr("stroke-width", 2)
+        .transition() //トランジション設定開始
+        .duration(1000) //トランジションが開始してから終了するまでの時間を設定
+        .attr("cx", 500) //トランジション終了後の値を指定
+        .attr("cy", 300)
+        
+    
+    //svg要素にrect要素を追加する
+    var rect = svg.append("rect");
+    
+    //rect要素がアペンドされるときに fillのカラーを黒から紫にトランジションさせる。
+    //さらにトランジションをチェインし、fillのカラーを緑にしつつ座標を変更する
+    rect
+        .attr("x", 100)
+        .attr("y", 200)
+        .attr("width", 200)
+        .attr("height", 50)
+        .attr("stroke", "#000000")
+        .attr("fill", "#000000") //黒
+        .transition()
+        .duration(1000)
+        .attr("fill", "#ff00ff") //紫
+        .transition() //トランジションチェイン（上記トランジション終了後に次のトランジションを開始する）
+        .duration(1000)
+        .attr("fill", "#00ff00")
+        .attr("x", 200)
+        .transition() //トランジションチェイン
+        .duration(1000)
+        .attr("y", 500)
+        .transition() //トランジションチェイン
+        .duration(1000)
+        .attr("x", 800)
+        
+        
+    
+    //svg要素にtext要素を追加する
+    var text = svg.append("text");
+    
+    //rect要素がアペンドされるときに 180度回転させる
+    text
+        .attr("x", 400)
+        .attr("y", 500)
+        .attr("font-family", "Verdana")
+        .attr("font-size", 45)
+        .attr("fill", "rgb(255, 120, 120)")
+        .text("Hello, Inline SVG & D3 !")
+        .attr("transform", "rotate(0)")
+        .transition()
+        .duration(3000)
+        .attr("transform", "rotate(180)")
+
+}
+    
+</script>
+
+</body>
+</html>

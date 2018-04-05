@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<meta charset="utf-8" />
+<title>2017年熱中症発生数</title>
+<style>
+html, body, svg {
+	width: 100%;
+	height: 100%;
+}
+	
+text {
+	text-anchor: middle;
+	dominant-baseline: hanging;
+}
+
+</style>
+
+
+
+</head>
+<body>
+<p>2017年熱中症発生数（救急搬送）：総数 クリックでソート</p>
+<button id="btn">並べ替え</button>
+<svg></svg>
+
+<script src="//unpkg.com/d3@5.0.0/dist/d3.min.js"></script>    
+<script> 
+  //熱中症データの読み込み
+d3.tsv("2017_3_6_16_38.tsv").then(main);
+								  
+function main(data) {
+	
+	//文字データを数値に変換
+	data.forEach(function(d){
+		d['指標値(単位:人/10万人)'] = +d['指標値(単位:人/10万人)'] * 100000;
+	});
+	
+	
+	var svg = d3.select('svg');
+	var w =  svg.node().clientWidth;
+	var h = svg.node().clientHeight;
+	
+	var radius = (w/11); //サークルの半径
+	var margin = radius/4; //サークル間のマージン
+	
+	//ステージを設置
+	var stage = svg.append("g")
+		.attr("transform", "translate("+[radius/2,radius/2]+")") //topとleftを半径分ずらす
+	
+	//ソートを切り替える関数
+	var sort = SortToggle();
+	
+	//データの最大値を取得
+	var dmax =  d3.max(data.map(function(d) { return d['指標値(単位:人/10万人)']; }))
+
+	//0〜データの最大値までを、0〜半径の大きさに正規化
+	var rScale = d3.scaleSqrt().domain([0, dmax]).range([0, radius-margin]);
+
+	render(data)
+	
+	d3.select('#btn')
+	   .on('click', function(){ //bodyにクリックイベントを設置
+			render(sort(data));
+	   })
+
+	   
+	//エレメントをレンダリングする	   
+	function render(data){
+		//サークル、県名ラベル、発生数ラベルをまとめる親要素としてgroup要素をセレクトする
+		var updateGroup = stage.selectAll(".group").data(data, function(d){ return d['都道府県名']});
+		
+		var enterGroup = updateGroup.enter().append("g").attr("class", "group")
+			.attr("transform", "translate("+[w/2-(radius/2), (radius*5)/2]+")") //新規追加時の初期位置をステージの中心にする
+		
+		//サークルをグループの直下に追加
+		enterGroup.append("circle")
+			.attr('opacity',0.6)
+			.attr('fill', 'red')
+			.attr('r', function(d){ return rScale(d['指標値(単位:人/10万人)']) })
+		
+		//県名ラベルをグループ直下に追加
+		enterGroup.append('text')
+			.attr("fill", "black")
+			.attr("y", "-0.5em")
+			.text(function(d){ return d['都道府県名'] })
+		
+		//発生数ラベルをグループ直下に追加
+		enterGroup.append('text')
+			.attr("fill", "black")
+			.attr("y", "0.5em")
+			.text(function(d){ return ~~(d['指標値(単位:人/10万人)']/10000) + "万人" })
+			
+		
+		//既存エレメントと追加エレメントの位置をアップデート
+		updateGroup.merge(enterGroup)
+			.attr("fill", "red")
+			.transition() //トランジション開始
+			.duration(1000) //1000msかけて移動する
+			.attr("transform", function(d, i){
+				var x =  (i % 10) * radius;
+				var y = ~~(i / 10) * radius;
+
+				return "translate("+[x,y]+")";
+			});
+			 
+	}
+	
+	
+	//ソートを切り替える
+	function SortToggle(){
+		var sortNext = 0;
+		return function (data){
+			switch(sortNext){
+				case 0:
+					data.sort(function(a,b){return b['指標値(単位:人/10万人)'] - a['指標値(単位:人/10万人)']});
+					break;
+				case 1:
+					data.sort(function(a,b){return a['地方自治体コード'] - b['地方自治体コード'] });
+					break;
+				
+			}
+			sortNext++;
+			if(sortNext > 1) sortNext = 0;
+			return data;
+		}
+
+	}
+		   
+	
+}
+	
+	
+</script>
+</body>
+</html>

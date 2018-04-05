@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title>D3 v4 - treemap</title>
+<style>
+html, body, #graph {
+  padding:0xp;
+  margin:0px;
+  width: 100%;
+  height: 100%;
+}
+</style>
+</head>
+
+<body>
+<div id="graph"></div>    
+    
+    
+    
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/4.1.1/d3.min.js"></script>    
+<script>
+!(function(){
+    "use strict"
+
+    var width,height
+    var chartWidth, chartHeight
+    var margin
+    var svg = d3.select("#graph").append("svg")
+    var chartLayer = svg.append("g").classed("chartLayer", true)
+    
+    
+    var color = d3.scaleOrdinal()
+    .range(d3.schemeCategory10
+    .map(function(c) { c = d3.rgb(c); c.opacity = 0.6; return c; }));
+    
+    d3.csv("data.csv", cast, main)
+    
+    function cast(d) {
+        d.value1 = +d.value1
+        d.value2 = +d.value2
+        return d
+    }
+    
+    function main(data) {
+        
+        setSize()
+        
+        //トグル切り替えwrapper
+        var toggle = function(){
+            var fn = arguments;
+            var l = arguments.length;
+            var i = 0;
+            return function(){
+                if(l <= i) i=0;
+                fn[i++]();            
+            }
+        }        
+        
+        //読み込みデータを構造化
+        var stratify = d3.stratify()
+            .parentId(function(d) {return d.id.substring(0, d.id.lastIndexOf(".")); });
+        
+        //切り替え用に２種類のデータを生成する
+        var root1 = stratify(data).sum(function(d) { return d.value1 })
+        var root2 = stratify(data).sum(function(d) { return d.value2 })
+
+        var treemap = d3.treemap()
+            .size([chartWidth, chartHeight])
+            .padding(1)
+            .round(true);        
+
+        //ツリーマップ座標をデータに付加        
+        treemap(root2)
+        treemap(root1)
+        
+                
+        var changeDraw = toggle(function(){
+                renderTreemap(root1)                
+            },
+            function(){
+                renderTreemap(root2)                
+            })
+                
+        setInterval(changeDraw, 3000)
+        changeDraw()
+    
+    }
+    
+    function setSize() {
+        width = document.querySelector("#graph").clientWidth
+        height = document.querySelector("#graph").clientHeight
+    
+        margin = {top:0, left:0, bottom:0, right:0 }
+        
+        
+        chartWidth = width - (margin.left+margin.right)
+        chartHeight = height - (margin.top+margin.bottom)
+        
+        svg.attr("width", width).attr("height", height)
+        
+        
+        chartLayer
+            .attr("width", chartWidth)
+            .attr("height", chartHeight)
+            .attr("transform", "translate("+[margin.left, margin.top]+")")
+            
+            
+    }
+    
+    function renderTreemap(root) {
+
+        //data bind
+        var node = chartLayer
+            .selectAll(".node")
+            .data(root.leaves(), function(d){ return d.id })
+    
+        node
+            .selectAll("rect")
+            .data(root.leaves(), function(d){ return d.id })        
+    
+        node
+            .selectAll("text")
+            .data(root.leaves(), function(d){ return d.id })        
+    
+        // enter                  
+        var newNode = node.enter()
+            .append("g")
+            .attr("class", "node")
+                  
+        newNode.append("rect")
+            .attr("x", function(d) { return d.x0 })
+            .attr("y", function(d) { return d.y0  })
+            .attr("width", function(d) { return d.x1 - d.x0 })
+            .attr("height", function(d) { return d.y1 - d.y0})
+
+        newNode.append("text")
+            .attr("transform", function(d){ return "translate("+[d.x0, d.y0]+")" })
+    
+          
+        // update   
+        chartLayer
+            .selectAll(".node rect")
+            .transition()
+            .delay(function(d,i){ return i * 100 })
+            .duration(1000)
+            .attr("x", function(d) { return d.x0 })
+            .attr("y", function(d) { return d.y0  })
+            .attr("width", function(d) { return d.x1 - d.x0 })
+            .attr("height", function(d) { return d.y1 - d.y0})
+            .attr("fill", function(d) { while (d.depth > 1) d = d.parent; return color(d.id); })
+            
+        chartLayer
+            .selectAll(".node text")    
+            .transition()
+            .delay(function(d,i){ return i * 100 })
+            .duration(1000)
+            .text(function(d){return  d.id })
+            .attr("y", "1.5em")
+            .attr("x", "0.5em")
+            .attr("font-size", "0.6em")
+            .attr("transform", function(d){ return "translate("+[d.x0, d.y0]+")" })
+        
+    }
+}());
+</script>    
+</body>
+</html>
