@@ -24,10 +24,9 @@
 h1,h2,h3,h4,h5,h6 {
 	text-transform:none !important;
 }
-p,  blockquote{
+h1,h2,h3,h4,h5,h6, p,  blockquote{
 	letter-spacing: 0.05em;	
 	font-feature-settings: 'palt';
-	text-align: justify;
 }
 
 blockquote {
@@ -121,6 +120,23 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 				<h2>D３とは</h2>
 			</section>
 
+			<section  data-background-image="image/d3Gallery.png">
+			</section>	
+
+			<section>
+				<h2><span class="red">D</span>ata-<span class="red">D</span>riven <span class="red">D</span>ocuments</h2>
+			</section>
+
+			<section>
+				<h2><span class="red">D3.js</span> is a JavaScript library for manipulating documents based on data. </h2>
+			</section>
+
+
+			<section>
+				<p>Webの標準機能を用いて、データを視覚化を作成するためのヘルパーライブラリ。</p>
+				<p>このアプローチは、既存のチャートライブラリより表現豊かで、CSSを用いてのカスタマイズや、ブラウザの開発ツールでのデバッグがしやすいなどのメリットがあります。</p>				
+			</section>
+
 			<section>
 				<h2>作者</h2>
 				<hr />
@@ -131,10 +147,6 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 			</section>			
 
 
-			<section>
-				<p>Webの標準機能を用いて、データを視覚化を作成するためのヘルパーライブラリ。</p>
-				<p>このアプローチは、既存のチャートライブラリより表現豊かで、CSSを用いてのカスタマイズや、ブラウザの開発ツールでのデバッグがしやすいなどのメリットがあります。</p>				
-			</section>
 
 			
 			<section>
@@ -224,12 +236,12 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 			<section>
 				<h3>課題　リレーションの管理</h3>
 				<hr>
-				<p>データの増減に合わせて、データを表現するエレメントの増減も管理する必要がる</p>
+				<p>データの増減や変更に合わせて、データを表現するエレメントの増減やステータスも管理する必要がる</p>
 				<p>その際、変更前のDOMと、変更後のDOMの差分を調整する必要がる。</p>				
 			</section>
 
 		<section>
-					<p>データの変更にともなって、複雑に変化するDOMの状態を開発者が管理するのは難しい</p>				
+					<h3>データの変更にともなって、複雑に変化するDOMの状態を開発者が管理するのは難しい</h3>				
 		</section>
 
 			<section>
@@ -384,63 +396,27 @@ updataDiv.merge(enterDiv).attr("width", d=> d.value )
 				<hr />
 				<ul>
 					<li>css</li>
-					<li>svg</li>
+					<li>svg(main)</li>
 					<li>canvas</li>
 					<li>webGL</li>
 				</ul>
 			</section>
 
-			<section>
-				<p>Webにはドキュメントだけでなく、図やグラフィックを描画するための様々な規格がありますが、D3ではこれらの規格を利用してデータビジュアライゼーションを描画します</p>
-			</section>
-			
-			<section>
-				<h2>Inline SVG</h2>
-				<hr />
-				HTMLの中にSVG要素を直接記述することができる。
-			</section>			
-			
-			<section>
-				<p>HTMLの中にSVGのcircle（円）要素を直接記述したサンプル</p>
-<pre><code class="hljs" style="word-wrap: break-word;">&lt;html&gt;
-	&lt;body&gt;
-		&lt;svg&gt;
-			&lt;circle cx=&quot;100&quot; cy=&quot;100&quot; r=&quot;50&quot; fill=&quot;red&quot; stroke=&quot;blue&quot; /&gt;
-		&lt;/svg&gt;						
-	&lt;/body&gt;					
-&lt;/html&gt;
-
-</code></pre>
-<ul>
-	<li>cx - 円の中心位置（横）</li>
-	<li>cy - 円の中心位置（縦）</li>
-	<li>r  - 円の半径</li>
-	<li>fill - 塗り（色）</li>
-	<li>stroke - 縁取り線（色）</li>
-</ul>
-
-
-			</section>
-
-
-			<section>
-				<h2>出力結果</h2>
-				<hr>
-				<svg style="width:100%;height:400px;border:1px solid gray;background-color:#ccc">
-					<circle cx="100" cy="100" r="50" fill="red" stroke="blue" />
-				</svg>
-			</section>
-
 		<section>
 			<h2>D3の哲学</h2>
-			<hr>
-			<p>
-				D3はあくまで数値計算や差分管理に徹し、計算結果を標準のAPIを通じてグラフィック要素に適用する。
-				描画処理を開発者が実装しなくてはならない分工数は増えるが、HTML5やWebGL,Web Componentsなど新たな機能が追加された際もD3の更新を待たずとも活用することができ、他のライブラリと組み合わせて使うことも難しくない。
-			</p>
+		</section>
+
+		<section>
+			<blockquote class="effect2">
+				D3の目的は、グラフィックを表現する新しい方法(DSL)を導入することなく視覚化を容易にすることです。<br>
+				D3はあくまで数値計算やDOMの差分管理に徹し、計算結果を標準のAPIを通じてグラフィック要素に適用します。<br>
+				このアプローチは、より表現力豊かで、将来のアップデート、CSSやデバッガなどの既存のツールやテクノロジとの互換性など、さまざまなメリットをもたらします。
+			</blockquote>
 		</section>
 	
-	
+
+			
+			
 		<section>
 			<h3>D3 + CSS transform + SVG filter</h3>
 			<a href="http://bl.ocks.org/shimizu/9f594c6483c2a693e06df3a51fa1125f" target="_blank"><img src="image/growline.png" /></a>
