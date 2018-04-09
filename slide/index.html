@@ -198,6 +198,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 			</section>
 
 
+
 			<section>
 				D3の学習風景
 				<img style="width:80%" src="image/d3mapview.png">
@@ -273,7 +274,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 			<section>
 				<h3>Code</h3>
-<pre><code class="hljs" style="word-wrap: break-word;">//データセット
+<pre><code class="hljs" style="word-wrap: break-word;max-height: 500px;">//データセット
 var data = [{id:0, value:100}, {id:1, value:200}, {id:2, value:300}]
 
 //エレメントにデータを束縛する
@@ -317,7 +318,7 @@ updataDiv.merge(enterDiv).attr("width", d=> d.value )
 
 				<section>
 					<h3>操作は変わらない</h3>
-<pre><code class="hljs" style="word-wrap: break-word;">    const projection = d3.geoMercator()
+<pre><code class="hljs" style="word-wrap: break-word;;max-height: 500px;">    const projection = d3.geoMercator()
         .fitExtent([[0, 0], [1240, 800]], geojson)
     
     const geoPaht = d3.geoPath().projection(projection)
@@ -630,7 +631,8 @@ function moveTween(osmb, target, duration) {
 			</section>
 
 			<section>
-				<h2>バージョン問題</h2>
+				<h3>バージョン問題</h3>
+				D3 ver.3	≠	ver.4 ver.5
 			</section>
 
 			<section>
@@ -638,7 +640,7 @@ function moveTween(osmb, target, duration) {
 			</section>
 
 			<section>
-				<h3>日本語の参考資料は全てver.3系</h3>
+				<h3>日本語の参考資料はほとんどver.3系</h3>
 				<hr>
 				<p>ver.4/5系では、サンプルコードが動きません</p>
 				<img style="border: none;box-shadow:none" src="image/books.png">
