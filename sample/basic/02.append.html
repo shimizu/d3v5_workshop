@@ -27,10 +27,12 @@ svg {
 <script src="//unpkg.com/d3@5.0.0/dist/d3.min.js"></script>    
 <script>
 /*
-01.svg.htmlと同じグラフィックをD3.jsを使って表示したサンプルです
+01.svg.htmlと同じグラフィックをD3.jsを使って表示したサンプルです。
+cssセレクターを使って親要素を選択肢appendメソッドでエレメントを追加します。
  */
     
-    
+ 
+ //ボタンクリック時の処理   
 d3.select("#btn").on("click", appendElement)    
 
 
