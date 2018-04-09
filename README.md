@@ -15,5 +15,7 @@
 
 [SERVED](http://enjalot.github.io/served/)
 
+served に sample フォルダをドラッグ＆ドロップして表示されたリンクをクリックしてください。
+
 <img src="http://shimz.me/blog/wp-content/uploads/2016/01/served20160128.gif">
 
