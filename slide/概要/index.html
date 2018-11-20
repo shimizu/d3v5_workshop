@@ -1,0 +1,723 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>D3 概要</title>
+
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/sky.css">
+
+<!-- Theme used for syntax highlighting of code -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+
+
+<link rel="stylesheet" href="css/box.css">
+
+<style>
+*, html, body{
+	font-family: "-apple-system", "Helvetica Neue", "Yu Gothic", YuGothic, "Hiragino Kaku Gothic W3 JIS2004", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", Verdana, Meiryo, "M+ 1p", sans-serif !important; 
+	
+}
+	
+h1,h2,h3,h4,h5,h6 {
+	text-transform:none !important;
+}
+h1,h2,h3,h4,h5,h6, p,  blockquote{
+	letter-spacing: 0.05em;	
+	font-feature-settings: 'palt';
+}
+
+p {
+	text-align:justify;
+}
+
+ul {
+	width: 80%;
+}
+
+blockquote {
+	text-align:left;
+	width: 90% !important;
+	font-size:1em !important;
+	line-height: 1.4em !important;
+	padding:20px !important;
+	background-color:#efefef !important;
+}
+
+
+	
+.drop{
+   -webkit-text-stroke-width: 1px;
+   -webkit-text-stroke-color: gray;
+	text-shadow: 1px 1px 3px #000 !important;  
+}
+
+.white {
+	color: white;
+}
+.gray {
+	color: #fff !important;
+}
+.red {
+	color: red !important;
+}
+
+.reveal pre code {
+	font-size: 1em;
+	line-height:1.3em;
+}
+
+#header-left {
+	position: absolute;
+	top: 0%;
+	left: 0%;
+}
+#header-right {
+	position: absolute;
+	top: 0%;
+	right: 0%;
+}
+#footer-left {
+	position: absolute;
+	bottom: 0%;
+	left: 0%;
+}
+
+
+</style>
+
+
+<!-- Printing and PDF exports -->
+<script>
+var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+<!-----------------------------------------------------------------------------
+
+   slide start 
+
+------------------------------------------------------------------------------>
+
+
+
+			<div id="header-right" style="font-size:0.6em;color:#ccc"></div>
+
+			<section><h2>D3.js</h2>
+			<hr>
+			<p>
+				<small>Created by <a href="http://shimz.me">Masayuki Shimizu</a> / <a href="http://twitter.com/_shimizu">@_shimizu</a></small>
+			</p>
+			</section>
+
+
+<section>
+
+			
+			<!-- section 2 -->
+			<section>
+				<h2>D３とは</h2>
+			</section>
+
+			<section  data-background-image="image/d3Gallery.png">
+			</section>	
+
+			<section>
+				<h2><span class="red">D</span>ata-<span class="red">D</span>riven <span class="red">D</span>ocuments</h2>
+			</section>
+
+			<section>
+				<h2><span class="red">D3.js</span> is a JavaScript library for manipulating documents based on data. </h2>
+			</section>
+
+
+			<section>
+				<p>データビジュアライゼーションを、Webの標準機能を用いて作成するためのヘルパーライブラリ。</p>
+				<p>このアプローチは、既存のチャートライブラリより表現豊かで、柔軟な視覚化を作成しやすいなどのメリットがあります。</p>				
+			</section>
+
+			<section>
+				<h3>作者</h3>
+				<hr />
+				<h4>Mike Bostock</h4>
+				<img src="image/mikbostock.jpg">
+				<h4 class="left">データジャーナリズムで有名なThe New York Times の
+				グラフィック部門のエンジニア兼編集者(現在は独立)</h4>
+			</section>			
+
+
+
+			
+			<section>
+				<h2><a target="_blank" href="https://bl.ocks.org/mbostock/1256572">D3 Show Reel</a></h2>
+				<hr>
+				プロモーションビデオ
+			</section>
+
+
+			<section  data-background-video="image/D3ShowReelHD.mp4">
+			</section>	
+
+			<section>
+				<h2>デファクトスタンダード</h2>
+				<hr>
+				<ul>
+					<li>New York Times,  Washington Post</li>
+					<li>Financial Times,  The Guardian</li>
+					<li>日経新聞、NHK、朝日新聞</li>					
+					<li>Microsoft、Twitter、IBM</li>					
+				</ul>				
+			</section>
+
+			<section>
+				GitHub スターランキング 7位(2018/4/5)
+				<img style="width:80%" src="image/GitstarRanking.png">
+			</section>
+
+			<section>
+				<h3>難易度が高いということでも有名<br>（誤解）</h3>
+			</section>
+
+			<section>
+				<h3><a target="_blank" href="https://medium.com/@enjalot/the-hitchhikers-guide-to-d3-js-a8552174733a">The Hitchhiker’s Guide to d3.js</a></h3>
+				<hr>
+				<blockquote class="effect2">
+					 D3を学ぶための風景は、豊かで、広大で、時には危険です。<br>
+					 あなたは、APIドキュメントの長い関数リストに悩まされているかもしれませんし、ホームページにある何ダースものチュートリアル中から、何を選ぶべきか迷って硬直しているかもしれません。<br>
+					 あなたが学ぶことができる２万件以上のサンプルがありますが、どれがどれくらい親しみやすいかはわかりません。
+				</blockquote>
+			</section>
+
+
+
+			<section>
+				D3の学習風景
+				<img style="width:80%" src="image/d3mapview.png">
+			</section>
+
+			<section>
+				D3を使いこなすための地図
+				<img style="width:70%" src="image/d3leanmap.png">
+			</section>
+
+
+			<section>
+				とりあえず理解しておくべき３大要素
+				<hr>
+				<ul>
+					<li>データドリブンドキュメント</li>
+					<li>数値計算モジュール</li>
+					<li>ウェブスタンダード</li>
+				</ul>
+			</section>
+
+</section>
+
+
+<section>
+
+
+			<section>
+				<h2>データドリブンドキュメント</h2>
+			</section>
+
+			<section>
+				データを図表で表現する
+				<img src="image/section5-1.png">
+			</section>
+			
+			<section>
+				Data -> Document
+				<img src="image/section5-2.png">
+			</section>
+
+
+			<section>
+				<h3>課題　リレーションの管理</h3>
+				<hr>
+				<p>データの増減や変更に合わせて、データを表現するエレメントの増減やステータスも管理する必要がる</p>
+				<p>その際、変更前のDOMと、変更後のDOMの差分を調整する必要がる。</p>				
+			</section>
+
+		<section>
+					<p>データの変更にともなって、複雑に変化するDOMの状態を開発者が管理するのは難しい</p>				
+		</section>
+
+			<section>
+				<h3>d3-selection</h3>
+				<hr>
+				Update, Enter, Exit.
+			</section>
+
+
+			<section>
+				<img style="border: none;box-shadow:none" src="image/d3data.png">
+			</section>
+			<section>
+				<img style="border: none;box-shadow:none" src="image/d3enter.png">
+
+			</section>
+			<section>
+				<img style="border: none;box-shadow:none" src="image/d3exit.png">
+			</section>
+
+
+
+			<section>
+				<h3>Code</h3>
+<pre><code class="hljs" style="word-wrap: break-word;max-height: 500px;">//データセット
+var data = [{id:0, value:100}, {id:1, value:200}, {id:2, value:300}]
+
+//エレメントにデータを束縛する
+const updataDiv = d3.selectAll("div")
+	.data(data, (d) => d.id) //データのidをキーに差分を計算
+
+//要素が足りない時は追加
+const enterDiv = updataDiv.enter()
+	.append("div") //追加
+
+//要素が多すぎる時は削除
+const exitDiv = updataDiv.exit()
+	.remove() //削除
+
+//属性値を束縛したデータを元にアップデートする
+updataDiv.merge(enterDiv).attr("width", d=> d.value )
+
+</code></pre>						
+			</section>
+
+			<section>
+
+				<h3>複雑なデータになっても</h3>
+				<br>
+				<div class="ulist">
+					<img src="image/city_geojson.png" width="50%" style="float: right">
+					<div style="font-size: 0.75em">
+						<br>
+						<h4>市区町村境界データ</h4>
+							<ul style="width:40%">
+								<li>GeoJSON</li>
+								<li>6MB</li>
+								<li>1755  Features</li>
+								<li>15795 Properties</li>
+							</ul>
+						</li>
+					</div>
+				</div>
+
+			</section>
+
+				<section>
+					<h3>操作は変わらない</h3>
+<pre><code class="hljs" style="word-wrap: break-word;;max-height: 500px;">    const projection = d3.geoMercator()
+        .fitExtent([[0, 0], [1240, 800]], geojson)
+    
+    const geoPaht = d3.geoPath().projection(projection)
+            
+    //path要素にデータを束縛する
+    const updatePath = svg.selectAll("path").data(geojson.features)
+    
+    //path要素が足りなければ追加する 
+    const enterPath = updatePath.enter().append("path")    
+
+    //path要素が多すぎるなら削除する
+    const exitPath = updatePath.exit().remove()
+        
+    //アトリビュートを更新して地図を描画する
+    const mapPath =  updatePath.merge(enterPath).attr("d", d => geoPaht(d))
+</code></pre>				
+				</section>
+
+				<section data-background="image/pathmap.png">
+				</section>
+
+				<section>可視化
+<pre><code class="hljs" style="word-wrap: break-word;">    //人口が２万人以上・以下で緑と青に塗り分ける
+    mapPath.attr("fill", d => (d.properties.pop > 20000) ? "green" : "blue"   )
+
+    //群馬県に所属する市区町村だけ赤く塗る
+    mapPath.filter(d => d.properties.pref === "群馬県").attr("fill", "red")
+</code></pre>				
+				</section>
+
+				<section data-background="image/colormaps.png">
+				</section>
+
+				<section>
+					<p>データ量が大きくなると、データを表現するエレメントも膨大になります。また、そこにインタラクションなどが絡んできた場合、現在のDOMの状態と操作後のDOMの状態の差分を管理しなくてはなりません</p>
+					<p>D3を使うことで、エレメントの存在確認等に煩わされることなく、複雑なデータビジュアライゼーションを作成できます。</p>
+				</section>
+
+</section>
+
+
+<section>
+			<section>
+				<h2>数値計算モジュール</h2>
+			</section>
+
+
+			<section>
+				<p>データビジュアライゼーションを作るにはデータの値を座標に変換するなど、さまざまな計算が必要になります。D3にはそういった計算を行うための様々なモジュールが用意されています。</p>
+			</section>
+
+			<section>
+				Data -> Document
+				<img src="image/section5-2.png">
+			</section>
+
+			<section>
+				Data -> px
+				<img src="image/scale1.png">
+			</section>
+
+			<section>
+				Data -> px 
+				<img src="image/scale2.png">
+			</section>
+
+			<section>
+				Data -> px ?
+				<img src="image/scale3.png">
+			</section>
+			
+			
+			<section>
+				<h3>正規化(標準化)</h3>
+				<hr>
+				<p>データを変換し、最小値と最大値を調整することでスケールの違うデータでも比較可能にする</p>
+			</section>
+			
+			<section>
+				<h3>data -> px</h3>
+				<h3>domain -> range</h3>
+			</section>
+
+
+			<section>
+				<h3>d3-scale</h3>
+				<hr>
+				正規化モジュール
+			</section>
+	
+			<section>
+				<h3>d3.scaleLinear</h3>
+				<hr>
+				<p>連続値データを、指定された範囲に正規化する</p>	
+<pre><code class="hljs" style="word-wrap: break-word;">const data = [10000, 22500, 7500];
+
+const max  = d3.max(data);//データ最大値を取得
+
+const scale = d3.scaleLinear()
+	.domain([0, max])  //　データの0〜最大値を
+	.range([0, 860]) // 0〜860の値に正規化する　
+
+scale(22500) ;// -> 860
+scale(10000) ;// -> 382.2222222222222 
+scale(7500) ;// -> 266.89655172413796
+</code></pre>
+
+<pre><code class="hljs" style="word-wrap: break-word;">d3.selectAll("div")
+		.data(data) //データをエレメントにバインド
+		.enter("div")
+		.attr("width" d => scale(d) ) //正規化した値をwidthに指定する
+</code></pre>
+
+			</section>
+
+<section>
+	<p>rangeには、数値だけでなく色範囲も指定できます</p>
+<pre><code class="hljs" style="word-wrap: break-word;">const data = [10000, 22500, 7500];
+
+const max  = d3.max(data);
+
+const colorScale = d3.scaleLinear()
+	.domain([0, max])  //　データの0〜最大値を
+	.range(["white", "red"]) // 白から赤に正規化する (#ffffffやrgb(2525,255,255)といった指定もできます)　
+
+colorScale(22500) // -> "rgb(255, 0, 0)"
+colorScale(10000) // -> "rgb(255, 142, 142)"
+colorScale(7500) // -> "rgb(255, 170, 170)"
+</code></pre>
+
+<pre><code class="hljs" style="word-wrap: break-word;">d3.selectAll("div")
+		.data(data) //データをエレメントにバインド
+		.enter("div")
+		.style("background-color" d => colorScale(d) ) //背景色
+</code></pre>
+
+			</section>
+	
+
+			<section>
+				<h3>d3.scaleBand</h3>
+				<hr>
+				<p>カテゴリを、指定された範囲に正規化する</p>
+<pre><code class="hljs" style="word-wrap: break-word;">const data = ["日本", "アメリカ", "イタリア", "中国"];
+
+
+const scale = d3.scaleBand()
+	.domain(data)  //　カテゴリを
+	.range([0, 860]) // 0〜860の値に正規化する　
+
+scale("日本") // -> 0
+scale("アメリカ") // -> 215
+scale("イタリア") // -> 430
+scale("中国") // -> 645 ?
+
+scale("中国") + scale.bandwidth() // -> 860
+scale.bandwidth() //-> 215(幅)
+
+</code></pre>
+			</section>
+
+
+			<section>
+				<h3>d3.scaleTime</h3>
+				<hr>
+				<p>日時(Date Object)を指定された範囲に正規化する</p>
+<pre><code class="hljs" style="word-wrap: break-word;">const startDate = new Date(2000, 0, 1);
+const endDate = new Date(2000, 0, 2);
+const scale = d3.scaleTime()
+    .domain([startDate, endDate])
+    .range([0, 860]);
+	 
+scale(startDate) // -> 0	 
+scale(endDate) // -> 860
+scale(new Date(2000, 0, 1,  5)); // -> 179.16666666666669
+scale(new Date(2000, 0, 1, 16)); // -> 573.3333333333333
+
+//逆引きもできます。
+scale.invert(200); // Sat Jan 01 2000 05:34:53 GMT+0900 (JST)
+scale.invert(640); // Sat Jan 01 2000 17:51:37 GMT+0900 (JST) 
+
+</code></pre>
+			</section>
+
+
+			<section>
+				<p>D3には正規化関数の他にも、値を角度に変換するコンバーターや、データのヒストグラムやクラスタリングを行うための統計処理関数、地図やツリーマップ、ボロノイ図などの幾何学処理を行うためのジオメトリ関数など多数の機能があります</p>
+			</section>
+
+	
+</section>
+
+<section>
+
+			
+			<!-- section 2 -->
+			<section>
+				<h2>ウェブスタンダード</h2>
+			</section>
+									
+			<section>
+				<h2>Webグラフィック規格</h2>
+				<hr />
+				<ul>
+					<li>css</li>
+					<li>svg(main)</li>
+					<li>canvas</li>
+					<li>webGL</li>
+				</ul>
+			</section>
+
+		<section>
+			<h2>D3の哲学</h2>
+		</section>
+
+		<section>
+			<blockquote class="effect2">
+				D3の目的は、グラフィックを表現する新しい方法(DSL)を導入することなく視覚化を容易にすることです。<br>
+				D3はあくまで数値計算やDOMの差分管理に徹し、計算結果を標準のAPIを通じてグラフィック要素に適用します。<br>
+				このアプローチは、より表現力豊かで、webの新機能への対応、CSSやデバッガなどの既存のツールやテクノロジとの互換性など、さまざまなメリットをもたらします。
+			</blockquote>
+		</section>
+	
+
+			
+			
+		<section>
+			<h3>D3 + CSS transform + SVG filter</h3>
+			<a href="http://bl.ocks.org/shimizu/9f594c6483c2a693e06df3a51fa1125f" target="_blank"><img src="image/growline.png" /></a>
+		</section>
+
+		<section>
+			<ul>
+				<li>傾けているのはCSS transform</li>
+				<li>光らせているのはSVG filter</li>
+				<li>エレメントの追加とアニメーションはD3</li>
+		</section>
+
+		<section>
+			CSS
+<pre><code class="hljs" style="word-wrap: break-word;">#chart {
+    transform: perspective( 600px ) rotateY( 45deg );
+}
+</code></pre>
+SVG
+<pre><code class="hljs" style="word-wrap: break-word;"><filter id="glow" x="-100" y="0" width="1800" height="600" filterUnits="userSpaceOnUse">
+	<feOffset result = "offOut" in = "SourceGraphic" dx = "0" dy = "0"/>
+	<feColorMatrix result = "matrixOut" in = "offOut" type = "matrix" values = "1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 1 1 0.4"/>
+	<feGaussianBlur result = "blurOut" in = "matrixOut" stdDeviation = "10"/>
+	<feBlend in = "SourceGraphic" in2 = "blurOut" mode = "lighten"/>
+</filter>
+</code></pre>
+D3
+<pre><code class="hljs" style="word-wrap: break-word;">stage.attr("transform", "translate("+[0, 0]+")")
+    .transition()
+    .duration(6000)
+    .attr("transform", "translate("+[-400, 100]+")")
+</code></pre>
+		</section>
+
+
+		<section>
+			<h3>OSM building + D3</h3>
+			<a href="https://vdata.nikkei.com/newsgraphics/tokyo-office-buildings/" target="_blank"><img src="image/osmbuilding.png" /></a>
+		</section>
+		
+		<section>
+			<p>3Dマップを表示しているライブラリOSN Buildingには、カメラをアニメーションさせる機能がないため、D3で2点間の座標を補完してトランジションを実装している</p>
+		</section>
+
+		<section>
+<pre><code class="hljs" style="word-wrap: break-word;max-height: 500px">//2点間の座標を元にカメラを移動させる
+function moveTween(osmb, target, duration) {
+	 var current = osmb.getPosition();
+	 var scale = d3.scaleLinear().domain([0, duration]).range([0, 1]).clamp(true);
+	 var interpolateLat = d3.interpolate(current.latitude, target.latitude);
+	 var interpolateLng = d3.interpolate(current.longitude, target.longitude);
+
+	 var t = d3.timer(function(elapsed) { //Animation Frame
+		  var pos = {
+				latitude:interpolateLat(scale(elapsed)),
+				longitude:interpolateLng(scale(elapsed))
+		  }
+		  osmb.setPosition(pos);
+		  if (elapsed > duration) t.stop();
+	 }, 100);
+
+	 return t;
+}
+</code></pre>
+		</section> 
+ 
+ 
+		<section>
+			<h3>D3を使うということ</h3>
+			<hr>
+			<p>D3は単体で完結するライブラリではなく、D3を使ってデータビジュアライゼーションを作成するには、HTML,CSS,SVGなど知識が必要となります。</p>
+			<p>しかし使いこなせれば他チャートライブラリでは難し多彩な表現を実装することができ、他のライブラリと組み合わせて使うことで新しい機能を実装することもでます。</p>
+		</section>
+
+
+</section>
+
+
+<section>
+
+			
+			<section>
+				<h2>学習リソース</h2>
+			</section>
+
+			<section>
+				<h3>バージョン問題</h3>
+				D3 ver.3	≠	ver.4 ver.5
+			</section>
+
+			<section>
+				<p>D3.jsの最新バージョンはver.5系。<br>日本で注目されたのはver.3系の頃。ver.3からvar.4にかけて後方互換のない破壊的アップデートが行われたため、ver.3のコードはver.4以降動かない</p>
+			</section>
+
+			<section>
+				<h3>日本語の参考資料はほとんどver.3系</h3>
+				<hr>
+				<p>ver.4/5系では、サンプルコードが動きません</p>
+				<img style="border: none;box-shadow:none" src="image/books.png">
+			</section>
+
+			<section>
+				<h2>どうやって学ぶか</h2>
+			</section>
+
+			<section>
+				<h3>公式サイト</h3>
+				<hr>
+				<ul>
+					<li><a href="https://github.com/d3/d3/blob/master/API.md">D3 API Reference</a><br></li>
+					<li><a href="https://github.com/d3/d3/blob/master/CHANGES.md">change log</a><br>3系から４/5系へのアップデートで変わった部分についてのログ</li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>スライド</h3>
+				<hr>
+				<ul>
+					<li><a href="https://iros.github.io/d3-v4-whats-new/#1">D3 V4 - What's new?</a></li>
+					<li><a href="https://www.slideshare.net/xxshimizuxx/d3-ver4">細かすぎて伝わらないD3 ver.4の話</a></li>
+				</ul>
+			</section>
+
+			<section>
+				<h3>入門サイト（チュートリアル）</h3>
+				<hr>
+				<ul>
+					<li><a href="https://leanpub.com/d3-t-and-t-v4/read">Read D3 Tips and Tricks v4.x</a></li>
+					<li><a href="https://square.github.io/intro-to-d3/">INTRO TO D3.JS</a></li>
+				</ul>
+			</section>
+
+
+			<section>
+				<h3>他、ブログ等</h3>
+				<hr>
+				<ul>
+					<li><a href="https://matome.naver.jp/odai/2152271841442737101">データビジュアライゼーション（D3.js ver.4/5）を学ぶための教材まとめ</a></li>
+				</ul>
+				<p>ネットの情報は、ver.3のコードとver.4/5系のコードが混在しているので注意が必要です。</P>
+			</section>
+
+
+</section>
+
+
+<!-----------------------------------------------------------------------------
+
+   slide End 
+
+------------------------------------------------------------------------------>
+</div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+// More info https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+	history: true,
+	slideNumber: 'c/t',
+	
+	// More info https://github.com/hakimel/reveal.js#dependencies
+	dependencies: [
+			{ src: 'plugin/markdown/marked.js' },
+			{ src: 'plugin/markdown/markdown.js' },
+			{ src: 'plugin/notes/notes.js', async: true },
+			{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+		]
+	}
+);
+
+</script>
+</body>
+</html>
