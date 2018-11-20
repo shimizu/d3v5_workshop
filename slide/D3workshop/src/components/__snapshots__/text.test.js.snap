@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Text /> should render a <div> with text for the \`fit\` configuration. 1`] = `
+<Text
+  fit={true}
+  lineHeight={1}
+>
+  <Styled(div)
+    className={undefined}
+    height={0}
+    innerRef={[Function]}
+    styles={
+      Object {
+        "base": Object {},
+        "context": Object {
+          "color": "#000",
+        },
+      }
+    }
+  >
+    <div
+      className="css-1rapqq0 e1kfncg50"
+      height={0}
+    >
+      <Styled(span)
+        innerRef={[Function]}
+        lineHeight={1}
+        scale={NaN}
+        styles={
+          Object {
+            "typeface": Object {},
+            "user": undefined,
+          }
+        }
+      >
+        <span
+          className="css-piqx9m e1kfncg51"
+          scale={NaN}
+        >
+          Spectacle Full Size!
+        </span>
+      </Styled(span)>
+    </div>
+  </Styled(div)>
+</Text>
+`;
+
+exports[`<Text /> should render a <p> with text for the default configuration. 1`] = `
+<Text
+  lineHeight={1}
+>
+  <Styled(p)
+    className={undefined}
+    styles={
+      Object {
+        "base": Object {},
+        "context": Object {
+          "color": "#000",
+        },
+        "typeface": Object {},
+        "user": undefined,
+      }
+    }
+  >
+    <p
+      className="css-cmzp7u e1kfncg52"
+    >
+      Spectacle!
+    </p>
+  </Styled(p)>
+</Text>
+`;

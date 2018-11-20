@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TableHeaderItem /> should render correctly 1`] = `
+<TableHeaderItem>
+  <Styled(td)
+    className={undefined}
+    styles={
+      Array [
+        Object {
+          "color": "#e01",
+        },
+        Object {},
+        Object {},
+        undefined,
+      ]
+    }
+  >
+    <td
+      className="css-4x5e e51bxha0"
+    >
+      Header Text
+    </td>
+  </Styled(td)>
+</TableHeaderItem>
+`;

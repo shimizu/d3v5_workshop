@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ListItem /> should render correctly 1`] = `
+<ListItem>
+  <Styled(li)
+    className={undefined}
+    styles={
+      Array [
+        Object {
+          "color": "#ff0",
+        },
+        Object {},
+        Object {},
+        undefined,
+      ]
+    }
+  >
+    <li
+      className="css-tr63ps ezfhvuh0"
+    >
+      Dog
+    </li>
+  </Styled(li)>
+</ListItem>
+`;

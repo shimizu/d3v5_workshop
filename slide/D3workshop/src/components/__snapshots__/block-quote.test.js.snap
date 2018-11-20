@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BlockQuote /> should render correctly. 1`] = `
+<BlockQuote>
+  <Styled(blockquote)
+    className={undefined}
+    styles={
+      Array [
+        Object {
+          "fontStyle": "oblique",
+        },
+        Object {},
+        Object {},
+        undefined,
+      ]
+    }
+  >
+    <blockquote
+      className="css-1220ekt e1i8vyy20"
+    >
+      Some Quote
+    </blockquote>
+  </Styled(blockquote)>
+</BlockQuote>
+`;
