@@ -1,41 +1,62 @@
+
+//チャート全体の幅と高さを保管する変数
 var width, height;
+//全体からマージンを引いたチャート用エリアの幅と高さを保存する変数
 var chartWidth, chartHeight;
-var margin;
+//マージン
+var margin = { top: 0, left: 100, bottom: 40, right: 0 };
+
+
+//svg要素をDOMに追加
 var svg = d3.select("#graph").append("svg");
+
+//svg要素配下に軸用のレイヤーを追加
 var axisLayer = svg.append("g").classed("axisLayer", true);
+//svg要素配下に軸チャート用のレイヤーを追加
 var chartLayer = svg.append("g").classed("chartLayer", true);
 
+//正規化関数の用意
 var xScale = d3.scaleBand();
 var yScale = d3.scaleLinear();
 
+//データの型を変換する関数
 var cast = function(d) {
   d.value = +d.value;
   return d;
 };
 
+
+//データ読み込み
 d3.csv("data.csv").then(main);
 
 function main(data) {
+  //value値を数値型に変換
   data.forEach(cast);
 
+  //サイズの調整
   setSize(data);
+  //軸を描画
   renderAxis();
+  //チャートを描画
   renderChart(data);
 }
 
 function setSize(data) {
+  //graphエリアの幅と高さを取得
   width = document.querySelector("#graph").clientWidth;
   height = document.querySelector("#graph").clientHeight;
 
-  margin = { top: 0, left: 100, bottom: 40, right: 0 };
-
+  //マージン分を引いたサイズを取得
   chartWidth = width - (margin.left + margin.right);
   chartHeight = height - (margin.top + margin.bottom);
 
+  //svg要素にgraphエリアの幅と高さを適用
   svg.attr("width", width).attr("height", height);
 
+  //軸レイヤーにgraphエリアの幅と高さを適用
   axisLayer.attr("width", width).attr("height", height);
 
+  //チャートレイヤーに幅と高さを適用
   chartLayer
     .attr("width", chartWidth)
     .attr("height", chartHeight)
