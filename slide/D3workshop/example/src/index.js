@@ -5,6 +5,7 @@ import {
   Appear,
   BlockQuote,
   Cite,
+  Code,
   CodePane,
   ComponentPlayground,
   Deck,
@@ -96,9 +97,9 @@ export default class Presentation extends Component {
             <Text textSize={"2.5em"}>目次</Text>
           </Typeface>
           <List>
-            <ListItem>HTML, CSS,  SVGを使って図を描く</ListItem>
+            <ListItem>SVGを使って図形を描画する</ListItem>
+            <ListItem>D3を使ってSVG要素を操作する</ListItem>
             <ListItem>データを読み込む</ListItem>
-            <ListItem>D3を使って要素を操作する</ListItem>
             <ListItem>次は？</ListItem>
           </List>
         </Slide>
@@ -106,41 +107,26 @@ export default class Presentation extends Component {
 
         <Slide transition={['spin']} bgColor="black">
           <Heading size={1} fit caps lineHeight={1} textColor="revers">
-            HTML, CSSを使って図形を描いてみる
+            SVGを使って図形を描画する
           </Heading>
         </Slide>
         
-        
-        <Slide>
-          <Heading size={1} fit caps lineHeight={1}>
-            HTML, CSSを使って図形を描いてみる
-          </Heading>
-        </Slide>
-
-        
         <Slide  bgColor="primary">
           <Typeface weight={600}>
-            <Text textSize={"1.5em"}>サンプルコード</Text>
+            <Text textSize={"1.5em"}>要素と属性</Text>
           </Typeface>
-          <CodePane textSize={"0.7em"}
-            lang="html"
-            source={require('raw-loader!../assets/code/html.html')}
-            margin="20px auto"
-            overflow="hidden"
-          />
-        </Slide>
-
-        <Slide  bgColor="primary">
-          <Typeface weight={600}>
-            <Text textSize={"1.5em"}>実行結果</Text>
-          </Typeface>
-        <iframe src="dist/code/html.html"></iframe>
-        </Slide>
-
-
+          <Text>　</Text>
+          <Code
+          >&lt;要素 属性=&quot;値&quot; 属性=&quot;値&quot; 属性=&quot;値&quot; /&gt;</Code>
+          <Text>　</Text>
+          <Text>図形の種類を要素で指定し、属性値でサイズや色などの詳細設定を行う</Text>
+          <Text>指定できる属性は要素によって変わるので注意が必要</Text>
+        </Slide>    
+        
+        
         <Slide >
           <Heading size={1} fit caps lineHeight={1}>
-            SVGを使って図形を描いてみる
+            直接SVGタグを記述して図形を描いてみる
           </Heading>
         </Slide>
 
@@ -148,9 +134,9 @@ export default class Presentation extends Component {
           <Typeface weight={600}>
             <Text textSize={"1.5em"}>サンプルコード</Text>
           </Typeface>
-          <CodePane textSize={"0.7em"}
+          <CodePane textSize={"0.7em"} height="600"
             lang="html"
-            source={require('raw-loader!../assets/code/svg.html')}
+            source={require('raw-loader!../assets/code/svg/example.html')}
             margin="20px auto"
             overflow="overflow"
           />
@@ -164,14 +150,101 @@ export default class Presentation extends Component {
         <iframe src="dist/code/svg.html"></iframe>
         </Slide>
 
+
+        <Slide  bgColor="primary">
+          <Heading size={1} fit caps lineHeight={1}  textColor="black">
+            SVG基本図形
+          </Heading>
+        </Slide>
         
         <Slide  bgColor="primary">
-          <Heading size={1} fit caps lineHeight={1} textColor="black">
-            D3では主にSVGを使って図形を描画します。
+          <Typeface weight={600}>
+            <Text textSize={"1.5em"}>長方形</Text>
+          </Typeface>
+          <CodePane textSize={"1.4em"} height="600"
+            lang="html"
+            source={require('raw-loader!../assets/code/svg/rect.html')}
+            margin="20px auto"
+            overflow="hidden"
+          />
+        </Slide>        
+
+
+        <Slide  bgColor="primary">
+          <Typeface weight={600}>
+            <Text textSize={"1.5em"}>円</Text>
+          </Typeface>
+          <CodePane textSize={"1.4em"} height="600"
+            lang="html"
+            source={require('raw-loader!../assets/code/svg/circle.html')}
+            margin="20px auto"
+            overflow="overflow"
+          />
+        </Slide>        
+
+        <Slide  bgColor="primary">
+          <Typeface weight={600}>
+            <Text textSize={"1.5em"}>線</Text>
+          </Typeface>
+          <CodePane textSize={"1.4em"} height="600"
+            lang="html"
+            source={require('raw-loader!../assets/code/svg/line.html')}
+            margin="20px auto"
+            overflow="overflow"
+          />
+        </Slide>
+        
+        <Slide  bgColor="primary">
+          <Typeface weight={600}>
+            <Text textSize={"1.5em"}>テキスト</Text>
+          </Typeface>
+          <CodePane textSize={"1.4em"} height="600"
+            lang="html"
+            source={require('raw-loader!../assets/code/svg/text.html')}
+            margin="20px auto"
+            overflow="overflow"
+          />
+        </Slide>    
+
+
+        <Slide transition={['spin']} bgColor="black">
+          <Heading size={1} fit caps lineHeight={1} textColor="revers">
+            D3を使ってSVG要素を操作する
           </Heading>
         </Slide>
         
         
+        <Slide >
+          <Heading size={1} fit caps lineHeight={1}>
+            セレクション(選択)
+          </Heading>
+        </Slide>        
+
+        <Slide  bgColor="primary">
+          <Typeface weight={600}>
+            <Text textSize={"1.5em"}>CSSセレクタ</Text>
+          </Typeface>
+          <CodePane textSize={"0.8em"}
+            lang="html"
+            source={require('raw-loader!../assets/code/selection/css.html')}
+            margin="20px auto"
+            overflow="overflow"
+          />
+        </Slide>    
+
+        <Slide  bgColor="primary">
+          <Typeface weight={600}>
+            <Text textSize={"1.5em"}>D3 セレクション</Text>
+          </Typeface>
+          <CodePane textSize={"0.8em"}
+            lang="html"
+            source={require('raw-loader!../assets/code/selection/d3.selection.html')}
+            margin="20px auto"
+            overflow="overflow"
+          />
+        </Slide>    
+
+
         
         <Slide transition={['spin']} bgColor="black">
           <Heading size={1} fit caps lineHeight={1} textColor="revers">
@@ -179,6 +252,56 @@ export default class Presentation extends Component {
           </Heading>
         </Slide>        
         
+        
+        <Slide  bgColor="primary">
+          <Typeface weight={600}>
+            <Text textSize={"1.5em"}>CSV</Text>
+          </Typeface>
+          <CodePane textSize={"0.8em"}
+            lang="html"
+            source={require('raw-loader!../assets/code/data/example.csv')}
+            margin="20px auto"
+            overflow="overflow"
+          />
+        </Slide>            
+
+        <Slide  bgColor="primary">
+          <Typeface weight={600}>
+            <Text textSize={"1.5em"}>TSV</Text>
+          </Typeface>
+          <CodePane textSize={"0.8em"}
+            lang="html"
+            source={require('raw-loader!../assets/code/data/example.tsv')}
+            margin="20px auto"
+            overflow="overflow"
+          />
+        </Slide>
+        
+
+        <Slide  bgColor="primary">
+          <Typeface weight={600}>
+            <Text textSize={"1.5em"}>JSON</Text>
+          </Typeface>
+          <CodePane textSize={"0.7em"}
+            lang="javascript"
+            source={require('raw-loader!../assets/code/data/example.txt')}
+            margin="20px auto"
+            overflow="overflow"
+          />
+        </Slide>            
+        
+
+        <Slide  bgColor="primary">
+          <Typeface weight={600}>
+            <Text textSize={"1.5em"}>D3を使ってデータを読み込む</Text>
+          </Typeface>
+          <CodePane textSize={"0.7em"}
+            lang="javascript"
+            source={require('raw-loader!../assets/code/data/d3.load.txt')}
+            margin="20px auto"
+            overflow="overflow"
+          />
+        </Slide>            
         
         
       </Deck>

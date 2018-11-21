@@ -1,0 +1,24 @@
+//csvの読み込み
+d3.csv('example.csv').then(function(data){
+    console.log(data) // output csv data
+})
+
+//tsvデータの読み込み
+d3.tsv('example.tsv').then(function(data){
+    console.log(data) // output tsv data
+});
+
+//jsonの読み込み
+d3.json('example.json').then(function(data){
+    console.log(data) // output tsv data
+});
+
+
+//複数データの読み込み
+var p1 = d3.csv("example1.csv");
+var p2 = d3.csv("example2.csv");
+var p3 = d3.json("example.json");
+
+Promis.all([p1, p2, p3]).then(function(data){
+    console.log(data);
+});
