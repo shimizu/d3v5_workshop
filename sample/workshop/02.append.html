@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<style>
+html, body {
+    width: 100%;
+    height: 100%;
+}
+   
+svg {
+    width:900px;
+    height: 450px;
+    background-color:#ccc;
+}
+section {
+    margin-top:20px; 
+}
+.btn {
+    display: block;
+}
+</style>    
+
+</head>
+<body>
+<button id="btn1" class="btn">append circle</button>    
+<button id="btn2" class="btn">append divs</button>    
+<svg id="stage"></svg>
+
+<section></section>
+
+<section></section>
+
+
+<section></section>
+
+<script src="//unpkg.com/d3@5.0.0/dist/d3.min.js"></script>    
+<script>
+/*
+D3.jsを使って要素を追加(append)するサンプルです。
+ */
+    
+ 
+ //ボタンクリック時の処理   
+d3.select("#btn1").on("click", appendCircle);
+d3.select("#btn2").on("click", appendDivs);
+
+
+
+function appendCircle(){
+    //svg要素を選択
+    var svg = d3.select("#stage");
+    
+    
+    //svg要素にcircle要素を追加する
+    var circle = svg.append("circle");
+    
+    //circle要素の属性値を設定
+    circle
+        .attr("cx", 100)
+        .attr("cy", 100)
+        .attr("r", 50)
+        .attr("fill", "red")
+        .attr("stroke", "blue")
+        .attr("stroke-width", 2);
+        
+}
+    
+    
+function appendDivs(){
+    //section要素を選択
+    var section = d3.selectAll("section");
+    
+    
+    //section要素配下にdiv要素を追加する
+    var divs = section.append("div");
+    
+    //circle要素の属性値を設定
+    divs
+        .style("width", "200px")
+        .style("height", "100px")
+        .style("background-color", "blue");
+        
+}    
+    
+</script>
+
+</body>
+</html>

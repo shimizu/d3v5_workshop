@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<style>
+html, body {
+    width: 100%;
+    height: 100%;
+}
+   
+svg {
+    width:900px;
+    height: 900px;
+    background-color:#ccc;
+}
+
+#btn {
+    display: block;
+}
+
+.bar {
+    color:white;
+    padding-left:0.5em;
+    padding-top: 0.5em;
+    margin-top:4px;
+    
+}
+
+</style>    
+
+</head>
+<body>
+<h2>データを元に要素をレンダリングする</h2>
+<button id="btn1">要素を毎回全削除して追加</button>    
+
+<button id="btn2">要素の差分のみを追加・更新</button>    
+<div id="stage"></div>
+
+
+<script src="//unpkg.com/d3@4.12.2/build/d3.min.js"></script>    
+<script>
+/*
+ *　データを元に要素の差分レンダリングを行うサンプルです。
+ *　データがアップデートされた際に自動的に差分を抽出し、必要なだけの追加と際描画を行います。
+ */
+
+ 
+//1〜10個のデータをランダムに生成する 
+var rnd10 = function(){
+    return ~~(Math.random() * 9) + 1;
+}
+var generateData = function(){
+    return d3.range(rnd10()).map(function(i){
+        return {id:i, value:~~(Math.random() * 600 + 100)}    
+    });
+}
+
+
+    
+d3.select("#btn1").on("click", render)    
+    
+d3.select("#btn2").on("click", diffRender)    
+
+//毎回要素を全削除して追加しなおす
+function render(){
+    var data = generateData(); //データを生成
+    
+    console.log("update data", data);
+    
+    var stage = d3.select("#stage");
+
+    //stage以下のbarを全て削除
+    stage.selectAll(".bar").remove();
+    
+    //enter 新たなデータを元に当たらな要素を追加
+    var enter = stage.selectAll(".bar")
+        .data(data)
+        .enter()
+        .append("div")
+        .attr("class", "bar")
+        .style("width", "0px")
+        .style("height", "50px")
+        .text(function(d){ return "id:" + d.id + " value:" + d.value ;})     
+
+
+       enter
+        .transition()
+        .duration(1000)
+        .style("background-color", "blue") // 新たに追加される要素は青に
+        .style("width", function(d){ return d.value + "px" ;}) 
+}
+
+
+//差分を管理してレンダリング
+function diffRender(){
+    var data = generateData(); //データを生成
+    
+    console.log("update data", data);
+    
+    var stage = d3.select("#stage");
+   
+   
+   //selected   すでにDOMに存在している要素を操作するセレクター
+    var selected = stage.selectAll(".bar") 
+       .data(data, function(d){ return d.id ;}) 
+        .style("background-color", "green") // すでに存在している要素は、緑に
+    
+    //enter     データの個数に対して足りていない(まだDOMに存在していない)要素を操作するセレクター
+    var enter = selected.enter() 
+        .append("div")  
+        .attr("class", "bar")
+        .style("width", "0px")
+        .style("height", "50px")
+        .style("background-color", "blue") // 新たに追加する要素は青に
+    
+     
+     //exit     データの個数に対して多すぎる要素のを操作するセレクター
+     var eixt = selected.exit() 
+        .transition()
+        .duration(600)
+         .style("background-color", "red") //削除する要素は赤に
+        .on("end", function(){
+            d3.select(this).remove(); //トランジションが終わったら削除する
+        });
+    
+
+    //selectedとenterを同時にアップデート
+    selected.merge(enter)
+        .transition().duration(1000)
+        .style("width", function(d){ return d.value + "px" ;})
+        .text(function(d){ return "id:" + d.id + " value:" + d.value ;}) 
+        
+    
+
+}
+    
+</script>
+
+</body>
+</html>

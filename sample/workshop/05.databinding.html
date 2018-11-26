@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<style>
+html, body {
+    width: 100%;
+    height: 100%;
+}
+   
+svg {
+    width:900px;
+    height: 900px;
+    background-color:#ccc;
+}
+
+#btn {
+    display: block;
+}
+
+.bar {
+    color:white;
+    padding-left:0.5em;
+    padding-top: 0.5em;
+    margin-top:4px;
+    
+}
+
+</style>    
+
+</head>
+<body>
+<div id="block"></div>    
+<svg id="stage"></svg>
+
+
+<script src="//unpkg.com/d3@5.0.0/dist/d3.min.js"></script>    
+<script>
+/*
+    エレメントにデータをバインディングし、バインディングしたデータを元に属性値をアップデートするサンプルです。
+    データの個数に応じて、必要な数のエレメントがappendされます。
+ */
+//div(#block)要素を選択する
+var block = d3.select("#block");
+//svg(#stage)要素を選択する
+var svg = d3.select("#stage")
+
+
+//データを読みこむ
+d3.csv("data/example.csv").then(function(data){
+    appendP(data);
+    addpendCircle(data);
+});
+
+function appendP(data){
+    block.selectAll("p")
+        .data(data) // data binding
+        .enter() // データの数たいして足りない要素の数だけ以降の処理を繰り返す
+        .append("p")
+        .text(function(d){ return d["名前"] ;});
+}
+    
+function addpendCircle(data){
+
+svg.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("cx", function(d){ return d["在庫"] ;}) //在庫数をx座標に反映
+    .attr("cy", function(d, i){ return i * 100 ;}) //データの順番をy座標に反映
+    .attr("r", function(d){ return d["値段"] ;}) //値段を半径に反映    
+    
+}
+    
+</script>
+
+</body>
+</html>

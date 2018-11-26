@@ -1,0 +1,9 @@
+[
+    {"id":1, "country": "日本", "value":5000, "flag":true},
+    {"id":2, "country": "中国", "value":8120, "flag":true},
+    {"id":3, "country": "アメリカ", "value":4200, "flag":true},
+    {"id":4, "country": "イギリス", "value":3300, "flag":true},
+    {"id":5, "country": "フランス", "value":8000, "flag":true},
+    {"id":6, "country": "ドイツ", "value":1120, "flag":true},
+    {"id":7, "country": "イタリア", "value":3200, "flag":true}
+]

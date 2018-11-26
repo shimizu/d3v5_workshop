@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<style>
+html, body {
+    width: 100%;
+    height: 100%;
+}
+   
+svg {
+    width:900px;
+    height: 900px;
+    background-color:#ccc;
+}
+</style>    
+
+</head>
+<body>
+<h2>このコードの実行結果はweb開発者ツールのコンソールに出力されます。</h2>
+
+
+<script src="//unpkg.com/d3@5.0.0/dist/d3.min.js"></script>    
+<script>
+/*
+ * D3をスケールのサンプルです。
+ * データの値を、指定した範囲にコンバートするscale関数を生成しています。
+*/   
+
+/////////////////////////////////////////    
+// linear スケール
+/////////////////////////////////////////
+var scale1 = d3.scaleLinear()
+    .domain([0, 100000])  //0〜10万までの値を
+    .range([0, 250]) //0〜250までの値に正規化する
+    
+console.log("scale1 0 ->", scale1(0));
+console.log("scale1 100000 ->", scale1(100000));
+console.log("scale1 3264 ->", scale1(3264));
+
+
+
+
+
+/////////////////////////////////////////    
+// カラースケール
+/////////////////////////////////////////    
+var scale2 = d3.scaleLinear()
+    .domain([0, 100000])  //0〜10万までの値を
+    .range(["white", "red"]) //白から赤へ正規化する。　range(["#ffffff", "#ff0000"]) や range(["rgb(255,255,255)", "rgb(255, 0, 0)"])という書き方もできる
+
+console.log("scale2 0 ->", scale2(0));
+console.log("scale2 100000 ->", scale2(100000));
+console.log("scale2 3264 ->", scale2(3264));
+    
+
+
+/////////////////////////////////////////    
+//オーディナルスケール (離散値や、カテゴリを正規化する)
+/////////////////////////////////////////
+var scale3 = d3.scaleBand()
+    .domain(["アメリカ", "イギリス", "フランス", "中国", "イタリア", "日本"]) //配列の内容を
+    .range([0, 500]) //0〜500までの値に正規化する
+
+    
+console.log("scale3 アメリカ ->", scale3("アメリカ"));
+console.log("scale3 日本 ->", scale3("日本"));
+console.log("scale3 中国 ->", scale3("中国"));
+
+
+/////////////////////////////////////////    
+//タイムスケール (日時や時間を表す、date object を正規化する)
+/////////////////////////////////////////
+var startDate = new Date(2018, 1, 1) ; //2018年1月1日
+var endDate = new Date(2018, 12, 30) ; //2018年12月30日
+
+
+var scale4 = d3.scaleTime()
+    .domain([startDate, endDate]) //2018年1月1日〜2018年12月30日までの日時を
+    .range([0, 500]) //0〜500までの値に正規化する
+
+    
+console.log("scale4 2018/1/1 ->", scale4( new Date(2018, 1, 1) ));
+console.log("scale4 2018/12/30 ->", scale4( new Date(2018, 12, 30) ));
+console.log("scale4 2018/6/12 ->", scale4( new Date(2018, 6, 12) ));
+
+
+
+</script>
+
+</body>
+</html>

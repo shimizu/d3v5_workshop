@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<script src="//unpkg.com/d3@5.0.0/dist/d3.min.js"></script>    
+<style>
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+#chart {
+    width: 900px;
+    height: 500px;
+}
+
+</style>
+
+
+
+</head>
+<body>
+<div id="chart"></div>
+
+
+
+<script>
+/*
+ * D3.jsを使って棒グラフを描画するサンプルです。
+ * 今までのサンプルで学んだ内容を応用したものになっています。
+ */
+
+
+//親要素のサイズを取得する
+var width = document.querySelector("#chart").clientWidth;
+var height = document.querySelector("#chart").clientHeight;
+    
+//svg要素を追加する
+var svg = d3.select("#chart").append("svg");
+
+//svgに親要素のサイズを適用する
+svg
+    .attr("width", width)
+    .attr("height", height)
+
+//axis用のマージンを設定   
+var margin = {left:40, top:40, bottom:40, right:40}    
+    
+//margin 分を差し引いたプロット用のサイズ
+var plotWidth = width - (margin.left + margin.right);
+var plotHeight = height - (margin.top + margin.bottom);
+
+//svgにレイヤー構造を設定する
+var plotLayer = svg.append("g").classed("plotLayer", true);
+var axisLayer = svg.append("g").classed("axisLayer", true);
+
+//レイヤーにマージンを設定する
+plotLayer.attr("transform", "translate("+[margin.left, margin.top]+")");
+axisLayer.attr("transform", "translate("+[margin.left, margin.top]+")");
+    
+//スケールを準備する
+var xScale = d3.scaleBand();
+var yScale = d3.scaleLinear();
+
+//データの型変換用関数
+var cast = function(d){
+    d.value = +d.value ; //valueの値を数値に変換
+    return d;
+}
+
+//データを読み込む
+d3.csv("data/test.csv", cast).then(render);
+
+
+function render(data){
+    
+    //データを元にx軸のドメインとレンジを設定する
+    var xDomain = data.map(function(d){ return d.name });
+    xScale.domain(xDomain).range([0, plotWidth]);
+
+    //データを元にy軸のドメインとレンジを設定する
+    var yDomain = [0, d3.max(data, function(d){ return d.value })];
+    yScale.domain(yDomain).range([plotHeight, 0]);
+    
+    //xAxisをレンダリングする
+    var renderXaxis = d3.axisBottom().scale(xScale);    
+    var xAxis = axisLayer.append("g")
+        .classed("xAxis", true)
+        .call(renderXaxis)
+        .attr("transform", "translate("+[0, plotHeight]+")")
+    
+    //yAxisをレンダリングする
+    var renderYaxis = d3.axisLeft().scale(yScale);    
+    var yAxis = axisLayer.append("g")
+        .classed("yAxis", true)
+        .call(renderYaxis)
+        .attr("transform", "translate("+[0, 0]+")")
+
+    //棒グラフをレンダリングする
+    var bar = plotLayer.selectAll(".rect")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("stroke", "blue")
+        .attr("fill", "skyblue")
+        .attr("width", xScale.bandwidth())
+        .attr("height", function(d){ return plotHeight - yScale(d.value)})
+        .attr("transform", function(d){
+            var x = xScale(d.name);
+            var y = yScale(d.value);
+            return "translate("+[x,y]+")";
+        })
+    
+}
+
+    
+</script>
+</body>
+</html>

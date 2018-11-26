@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+<style>
+html, body {
+    width: 100%;
+    height: 100%;
+}
+   
+svg {
+    width:900px;
+    height: 900px;
+    background-color:#ccc;
+}
+</style>    
+
+</head>
+<body>
+<svg></svg>
+
+
+<script src="//unpkg.com/d3@5.0.0/dist/d3.min.js"></script>    
+<script>
+/*
+ * D3でaxis（軸）を描画するサンプルです。
+ * 設定したscaleを元に、tick(目盛り)を含むaxsiが生成されます。
+*/   
+
+
+var svg = d3.select("svg");
+
+
+/////////////////////////////////////////    
+// left Axis (左側にラベルが表示された縦軸のaxis)
+/////////////////////////////////////////
+var scale1 = d3.scaleLinear()
+    .domain([0, 100000])  //0〜10万までの値を
+    .range([0, 250]) //0〜250までの値に正規化する
+    
+
+var renderAxis1 = d3.axisLeft().scale(scale1);
+
+var axis1 = svg.append("g");
+
+axis1.call(renderAxis1)
+.attr("transform", "translate(50, 10)") //axisの表示位置を調整
+    
+    
+
+
+
+
+/////////////////////////////////////////    
+// botttom Axis (下側にラベルが表示された横軸のaxis)
+/////////////////////////////////////////    
+var scale2 = d3.scaleLinear()
+    .domain([0, 10])  //0〜10での値を
+    .range([0, 700]) //0〜900までの値に正規化する
+
+    
+var renderAxis2 = d3.axisBottom().scale(scale2);
+
+var axis2= svg.append("g");
+
+axis2.call(renderAxis2)
+.attr("transform", "translate(60, 30)") //axisの表示位置を調整
+
+
+
+/////////////////////////////////////////    
+//オーディナルスケール をaxisに適応する
+/////////////////////////////////////////
+var scale3 = d3.scaleBand()
+    .domain(["アメリカ", "イギリス", "フランス", "中国", "イタリア", "日本"]) //配列の内容を
+    .range([0, 500]) //0〜500までの値に正規化する
+
+var renderAxis3 = d3.axisRight().scale(scale3);
+
+var axis3 = svg.append("g");
+
+axis3.call(renderAxis3)
+    .attr("transform", "translate(80, 130)") //axisの表示位置を調整
+
+
+
+/////////////////////////////////////////    
+//オーディナルスケール をaxisに適応する
+/////////////////////////////////////////
+var startDate = new Date(2018, 1, 1) ; //2018年1月1日
+var endDate = new Date(2018, 12, 30) ; //2018年12月30日
+
+
+var scale4 = d3.scaleTime()
+    .domain([startDate, endDate]) //2018年1月1日〜2018年12月30日までの日時を
+    .range([0, 600]) //0〜600までの値に正規化する
+
+var renderAxis4 = d3.axisTop().scale(scale4);
+    
+    
+var axis4 = svg.append("g");
+
+axis4.call(renderAxis4)
+    .attr("transform", "translate(220, 430)") //axisの表示位置を調整
+
+
+//フォーマットを使ってtickを変更する
+//var timeFormat = d3.timeFormat("%Y/%m/%d");
+var timeFormat = d3.timeFormat("%m/%d");
+
+var renderAxis4_1 = d3.axisTop().scale(scale4)
+    .tickFormat(function(d){
+        return timeFormat(d) ;
+    })
+
+
+var axis4_1 = svg.append("g");
+
+axis4_1.call(renderAxis4_1)
+    .attr("transform", "translate(220, 480)") //axisの表示位置を調整
+    
+    
+</script>
+
+</body>
+</html>

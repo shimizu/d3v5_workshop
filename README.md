@@ -3,7 +3,7 @@
 
 ## 各フォルダについての説明
 
-+ ./slide <br> D3の概要を説明した入門用スライドです。
++ ./slide <br> workshopの内容を解説するスライドです。
 + ./sample <br> D3のサンプルコードです。
 
 ## サンプルコードを実行する環境について
@@ -19,3 +19,12 @@ served に sample フォルダをドラッグ＆ドロップして表示され�
 
 <img src="http://shimz.me/blog/wp-content/uploads/2016/01/served20160128.gif">
 
+# エディタについて
+
+サンプルコードを編集は文字コードをUTF8に設定したエディタを使用してください、
+windowsの場合、メモ帳などで編集すると文字コードがshift-jisになってしまい正常に動作しなくなる可能性があります。
+
+utf8を利用できるエディタは以下のものがあります。
+
++ [Visual Studio Code](https://code.visualstudio.com/)
++ [Atom](https://atom.io/)
