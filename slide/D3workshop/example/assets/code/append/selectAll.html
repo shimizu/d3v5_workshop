@@ -1,0 +1,6 @@
+// section 要素を複数選択
+var section = d3.selectAll("section");
+
+// それぞれの section 要素 配下に h1 要素を追加
+var h1 = section.append("h1");
+h1.text("Hello!");

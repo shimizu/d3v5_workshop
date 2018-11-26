@@ -13,7 +13,6 @@ d3.json('example.json').then(function(data){
     console.log(data) // output tsv data
 });
 
-
 //複数データの読み込み
 var p1 = d3.csv("example1.csv");
 var p2 = d3.csv("example2.csv");

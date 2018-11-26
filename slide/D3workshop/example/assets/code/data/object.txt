@@ -1,0 +1,11 @@
+d3.csv("example.csv").then(loaded);
+
+function loaded(data){
+    console.log(data[0]["名前"]); //-> りんご
+    console.log(data[0]["在庫"]); //-> 10
+    console.log(data[0]["値段"]); //-> 210
+
+    console.log(data[1]["名前"]); //-> みかん
+    console.log(data[1]["在庫"]); //-> 32
+    console.log(data[1]["値段"]); //-> 180
+}

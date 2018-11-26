@@ -1,0 +1,4 @@
+//circle要素を選択し、属性値をアップデートする。
+d3.select("circle")
+    .attr("r", "250")       //r属性を250pxに更新
+    .attr("fill", "green")  //fill属性を緑に更新

@@ -1,0 +1,10 @@
+//1000件の配列を生成する [0, 1, 2, 3, ... 999]
+var data = d3.range(1000);
+
+var body = d3.select("body")
+
+body.selectAll("p")
+    .data(data)
+    .enter()
+    .append("p")
+    .text(function(d){ return d })

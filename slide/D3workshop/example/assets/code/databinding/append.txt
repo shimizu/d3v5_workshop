@@ -1,0 +1,12 @@
+//svg要素を選択する
+var body = d3.select("body");
+//データを読みこむ
+d3.csv("example.csv").then(append);
+
+function append(data){
+    body.selectAll("p")
+        .data(data) // data binding
+        .enter() // データの数たいして足りない要素の数だけ以降の処理を繰り返す
+        .append("p")
+        .text(function(d){ return d["名前"] });
+}

@@ -1,0 +1,14 @@
+var  data = ["日本", "アメリカ", "イタリア", "中国"];
+
+
+var  scale = d3.scaleBand()
+	.domain(data)  //　カテゴリを
+	.range([0, 860]) // 0〜860の値に正規化する　
+
+scale("日本") // -> 0
+scale("アメリカ") // -> 215
+scale("イタリア") // -> 430
+scale("中国") // -> 645 ?
+
+scale("中国") + scale.bandwidth() // -> 860
+scale.bandwidth() //-> 215(幅)

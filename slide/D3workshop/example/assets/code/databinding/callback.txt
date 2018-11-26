@@ -1,0 +1,4 @@
+circle
+  .attr("cx", function(d){ return d["在庫"] }) //在庫数をx座標に反映
+  .attr("cy", function(d, i){ return i * 100 }) //データの順番をy座標に反映
+  .attr("r", function(d){ return d["値段"] }) //値段を半径に反映

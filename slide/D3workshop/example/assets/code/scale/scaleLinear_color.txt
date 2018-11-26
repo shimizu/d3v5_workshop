@@ -1,0 +1,11 @@
+var  data = [10000, 22500, 7500];
+
+var  max  = d3.max(data); //最大値取得
+
+var  colorScale = d3.scaleLinear()
+	.domain([0, max])  //　データの0〜最大値を
+	.range(["white", "red"]) // 白から赤に正規化する (#ffffffやrgb(2525,255,255)といった指定もできます)　
+
+colorScale(22500) // -> "rgb(255, 0, 0)"
+colorScale(10000) // -> "rgb(255, 142, 142)"
+colorScale(7500) // -> "rgb(255, 170, 170)"

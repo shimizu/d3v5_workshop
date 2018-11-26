@@ -1,0 +1,14 @@
+var startDate = new Date(2000, 0, 1);
+var  endDate = new Date(2000, 0, 2);
+var  scale = d3.scaleTime()
+    .domain([startDate, endDate])
+    .range([0, 860]);
+	 
+scale(startDate) // -> 0	 
+scale(endDate) // -> 860
+scale(new Date(2000, 0, 1,  5)); // -> 179.16666666666669
+scale(new Date(2000, 0, 1, 16)); // -> 573.3333333333333
+
+//逆引きもできます。
+scale.invert(200); // Sat Jan 01 2000 05:34:53 GMT+0900 (JST)
+scale.invert(640); // Sat Jan 01 2000 17:51:37 GMT+0900 (JST) 
