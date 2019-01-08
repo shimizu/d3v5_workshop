@@ -3,7 +3,7 @@
 
 ## 各フォルダについての説明
 
-+ ./slide <br> workshopの内容を解説するスライドです。
++ [./slide](https://shimizu.github.io/d3v5_workshop/slide/D3workshop/#/) <br> workshopの内容を解説するスライドです。
 + ./sample <br> D3のサンプルコードです。
 
 ## サンプルコードを実行する環境について
