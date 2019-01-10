@@ -17,7 +17,7 @@
 
 served にダウンロードしたフォルダをドラッグ＆ドロップして表示されたリンクをクリックしてください。
 
-<img src="http://shimz.me/blog/wp-content/uploads/2016/01/served20160128.gif">
+<img src="https://raw.githubusercontent.com/shimizu/d3v5_workshop/master/served-dragdrop.gif">
 
 # エディタについて
 
