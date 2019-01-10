@@ -9,16 +9,21 @@ var cast = function(d) {
   return d;
 };
 
+var arcData = null;
+var arcPath =d3.arc()
+
 d3.csv("data.csv").then(main);
 
 function main(data) {
   data.forEach(cast);
 
-  setSize(data);
+  initSize(data);
+  initData(data)
+  initScale()
   renderChart(data);
 }
 
-function setSize(data) {
+function initSize(data) {
   width = document.querySelector("#graph").clientWidth;
   height = document.querySelector("#graph").clientHeight;
 
@@ -35,22 +40,25 @@ function setSize(data) {
     .attr("transform", "translate(" + [margin.left, margin.top] + ")");
 }
 
-function renderChart(data) {
-  //pieチャート用のデータセットを生成する
-  var arcs = d3
-    .pie()
-    .sort(null)
-    .value(function(d) {
-      return d.value;
-    })(data);
+function initData(data){
+  arcData = d3
+      .pie()
+      .sort(null)
+      .value(function(d) {
+        return d.value;
+      })(data);  
+}
 
+function initScale(data){
   //パスジェネレーターを生成する
-  var arc = d3
-    .arc()
-    .outerRadius(chartHeight / 2)
+  arcPath.outerRadius(chartHeight / 2)
     .innerRadius(chartHeight / 4)
     .padAngle(0.03)
     .cornerRadius(8);
+}
+
+function renderChart(data) {
+
 
   var pieG = chartLayer
     .selectAll("g")
@@ -59,7 +67,7 @@ function renderChart(data) {
     .append("g")
     .attr("transform", "translate(" + [chartWidth / 2, chartHeight / 2] + ")");
 
-  var block = pieG.selectAll(".arc").data(arcs);
+  var block = pieG.selectAll(".arc").data(arcData);
 
   var newBlock = block
     .enter()
@@ -69,7 +77,7 @@ function renderChart(data) {
   //円グラフ描画
   newBlock
     .append("path")
-    .attr("d", arc)
+    .attr("d", arcPath)
     .attr("id", function(d, i) {
       return "arc-" + i;
     })

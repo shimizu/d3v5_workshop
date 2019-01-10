@@ -55,9 +55,10 @@ var generateData = function(){
 }
 
 
-    
+ //差分管理を行わないレンダリングが実行されます。   
 d3.select("#btn1").on("click", render)    
-    
+
+// D3 のデータドリブンドキュメントの仕組みを使った差分レンダリングを行います。    
 d3.select("#btn2").on("click", diffRender)    
 
 //毎回要素を全削除して追加しなおす

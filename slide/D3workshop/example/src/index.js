@@ -330,6 +330,12 @@ export default class Presentation extends Component {
             <Text textSize={"1.5em"}>select -> append</Text>
           </Typeface>
           <CodePane textSize={"0.8em"}
+            lang="html"
+            source={require('raw-loader!../assets/code/append/select-before.html')}
+            margin="20px auto"
+            overflow="overflow"
+          />
+          <CodePane textSize={"0.8em"}
             lang="javascript"
             source={require('raw-loader!../assets/code/append/select.html')}
             margin="20px auto"
@@ -347,6 +353,12 @@ export default class Presentation extends Component {
           <Typeface weight={600}>
             <Text textSize={"1.5em"}>selectAll -> append</Text>
           </Typeface>
+          <CodePane textSize={"0.8em"}
+            lang="html"
+            source={require('raw-loader!../assets/code/append/selectAll-before.html')}
+            margin="20px auto"
+            overflow="overflow"
+          />
           <CodePane textSize={"0.8em"}
             lang="javascript"
             source={require('raw-loader!../assets/code/append/selectAll.html')}
@@ -552,7 +564,7 @@ export default class Presentation extends Component {
            <Typeface weight={600}>
             <Text textSize={"2em"}>スケール(正規化)</Text>
             <hr />
-            <Text textSize={"2em"}>scaleLinear(), scaleBand(), scaleTime()</Text>
+            <Text textSize={"2em"}>scaleLinear()<br/>scaleBand()<br/>scaleTime()</Text>
           </Typeface>
         </Slide>
         

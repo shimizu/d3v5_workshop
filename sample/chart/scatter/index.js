@@ -21,13 +21,17 @@ d3.csv("data.csv").then(main);
 function main(data) {
   data.forEach(cast);
 
-  setSize(data);
+  initSize(data);
+  initScale();
   renderAxis();
   renderChart(data);
-  animation();
+
+
+  // ↓の関数を実行するとチャートがアニメーションします。
+  //animation();
 }
 
-function setSize(data) {
+function initSize(data) {
   width = document.querySelector("#graph").clientWidth;
   height = document.querySelector("#graph").clientHeight;
 
@@ -45,8 +49,12 @@ function setSize(data) {
     .attr("height", chartHeight)
     .attr("transform", "translate(" + [margin.left, margin.top] + ")");
 
+}
+
+
+function initScale(){
   xScale.domain([0, 190]).range([0, chartWidth]);
-  yScale.domain([0, 90]).range([chartHeight, 0]);
+  yScale.domain([0, 90]).range([chartHeight, 0]);  
 }
 
 function renderChart(data) {
@@ -80,24 +88,31 @@ function renderAxis() {
 }
 
 function animation() {
+  
+  //描画するデータの範囲を変更してスケールを更新する。
   if (xScale.domain()[0] == 0 && yScale.domain()[0] == 0) {
+    //x軸の最小値を160, y軸の最小値を190に変更する
     xScale.domain([160, 190]);
     yScale.domain([50, 90]);
   } else {
+    //x軸の最小値を0, y軸の最小値を0に変更する
     xScale.domain([0, 190]);
     yScale.domain([0, 90]);
   }
 
+  //トランジション設定
   var t = d3
     .transition()
     .delay(1000)
     .duration(1600)
     .ease(d3.easeLinear)
-    .on("end", animation);
+    .on("end", animation); //アニメーションをループ(再帰)させる
 
+  //軸をアニメーションしながら更新
   yAxis.transition(t).call(d3.axisLeft(yScale).tickSizeInner(-chartWidth));
   xAxis.transition(t).call(d3.axisBottom(xScale).tickSizeInner(-chartHeight));
 
+  //チャートをアニメーションさせながら更新する
   chartLayer
     .selectAll(".point")
     .transition(t)

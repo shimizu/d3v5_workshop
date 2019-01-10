@@ -34,34 +34,40 @@ function main(data) {
   data.forEach(cast);
 
   //サイズの調整
-  setSize(data);
+  initSize(data);
+  
+  initScale(data);
+  
   //軸を描画
   renderAxis();
   //チャートを描画
   renderChart(data);
 }
 
-function setSize(data) {
-  //graphエリアの幅と高さを取得
+function initSize(data) {
+  //親要素の高さと幅を取得し、チャートのサイズを決定する
   width = document.querySelector("#graph").clientWidth;
   height = document.querySelector("#graph").clientHeight;
 
-  //マージン分を引いたサイズを取得
+  //チャート描画エリア (軸は含まない)のマージン
   chartWidth = width - (margin.left + margin.right);
   chartHeight = height - (margin.top + margin.bottom);
 
-  //svg要素にgraphエリアの幅と高さを適用
+  //svg要素は親要素と同じサイズにする
   svg.attr("width", width).attr("height", height);
 
-  //軸レイヤーにgraphエリアの幅と高さを適用
+  //軸(axis)を描画するレイヤーも親要素と同じサイズにする。
   axisLayer.attr("width", width).attr("height", height);
 
-  //チャートレイヤーに幅と高さを適用
+  //チャートを描画するレイヤーはマージン分縮小される
   chartLayer
     .attr("width", chartWidth)
     .attr("height", chartHeight)
     .attr("transform", "translate(" + [margin.left, margin.top] + ")");
 
+}
+
+function initScale(data){
   xScale
     .domain(
       data.map(function(d) {
@@ -80,6 +86,7 @@ function setSize(data) {
       })
     ])
     .range([chartHeight, 0]);
+  
 }
 
 function renderChart(data) {

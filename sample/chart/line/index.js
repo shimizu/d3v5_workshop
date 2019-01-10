@@ -19,12 +19,13 @@ d3.csv("data.csv").then(main);
 function main(data) {
   data.forEach(cast);
 
-  setSize(data);
+  initSize(data);
+  initScale(data);
   renderAxis();
   renderChart(data);
 }
 
-function setSize(data) {
+function initSize(data) {
   width = document.querySelector("#graph").clientWidth;
   height = document.querySelector("#graph").clientHeight;
 
@@ -42,6 +43,9 @@ function setSize(data) {
     .attr("height", chartHeight)
     .attr("transform", "translate(" + [margin.left, margin.top] + ")");
 
+}
+
+function initScale(data){
   xScale
     .domain([new Date("2016/1/1"), new Date("2016/3/16")])
     .range([0, chartWidth]);
@@ -52,7 +56,7 @@ function setSize(data) {
         return d.value;
       })
     ])
-    .range([chartHeight, 0]);
+    .range([chartHeight, 0]);  
 }
 
 function renderChart(data) {

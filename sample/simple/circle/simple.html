@@ -96,8 +96,9 @@ function main(data) {
 		//既存エレメントと追加エレメントの位置をアップデート
 		updateGroup.merge(enterGroup)
 			.attr("fill", "red")
-            //.transition()
-            //.duration(1000)            
+            // .transition()  //トランジションをさせたらどうなるか試してみよう
+	        //.duration(1000)  //トランジションの遷移にかかる時間を変えてみよう
+			//.delay(function(d, i){ return i * 50 }) //トランジションが開始される時間をエレメントごとに変えてみよう
 			.attr("transform", function(d, i){
 				return "translate("+[radius/2, i*radius]+")";
 			});
