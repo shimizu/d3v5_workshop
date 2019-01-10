@@ -22,4 +22,4 @@
 
 served にダウンロードしたフォルダをドラッグ＆ドロップして表示されたリンクをクリックしてください。
 
-<img src="http://shimz.me/blog/wp-content/uploads/2016/01/served20160128.gif">
+<img src="https://shimizu.github.io/served-dragdrop.gif">
