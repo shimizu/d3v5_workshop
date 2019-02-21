@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang='jp'>
+<head>
+<meta charset='utf-8' />
+<title>2017年熱中症発生数</title>
+<style>
+html, body, svg {
+	width: 100%;
+	height: 100%;
+}
+</style>
+
+
+
+</head>
+<body>
+<button id="asc">昇順に並べ替え</button>	
+<button id="des">降順に並べ替え</button>
+<svg></svg>
+
+<script src='//unpkg.com/d3@5.0.0/dist/d3.min.js'></script>    
+<script> 
+  //熱中症データの読み込み
+d3.tsv('2017_3_6_16_38.tsv').then(main);
+								  
+function main(data) {
+	
+	//文字データを数値に変換
+	data.forEach(function(d){
+		d['指標値(単位:人/10万人)'] = +d['指標値(単位:人/10万人)'] * 100000;
+	});
+	
+	
+	var svg = d3.select('svg');
+	//svg要素の高さと幅を取得する
+	var w =  svg.node().clientWidth;
+	var h = svg.node().clientHeight;
+	
+	var MaxRadius = 80; //サークルの最大半径を設定
+	var margin = MaxRadius/2; //サークル間のマージン
+    
+  	svg.style('height', MaxRadius * data.length + 'px') //データの数だけsvgエリアの高さを広げる 
+		
+	//データの最大値を取得
+	var dmax =  d3.max(data.map(function(d) { return d['指標値(単位:人/10万人)']; }))
+
+	//0〜データの最大値までを、0〜半径の大きさに正規化
+	rScale = d3.scaleSqrt().domain([0, dmax]).range([0, MaxRadius]);
+
+	//ページ読み込み時の初期描画処理
+	render(data);
+
+	//「昇順に並べ替え」ボタンが押された際の処理
+	d3.select('#asc').on('click', function(){
+		ascendingSort(data);
+	})
+
+	//「降順に並べ替え」ボタンが押された際の処理
+	d3.select('#des').on('click', function(){
+		descending(data);
+	});
+
+
+	function render(data){
+		var updateGroup = svg.selectAll('g')
+		.data(data, function(d){ return  d['都道府県名'] }); //データとエレメントを繋ぐキーを設定する
+		
+		var enterGroup = updateGroup
+			.enter()
+			.append('g')
+			.attr('transform', 'translate('+[MaxRadius, 0]+')')
+		
+		//グループ内にサークルを追加する
+		enterGroup.append('circle')
+			.attr('fill', 'red')
+			.attr('r',function(d){ return rScale( d['指標値(単位:人/10万人)'] )})
+		
+		//グループ内にテキストを追加する
+		enterGroup.append('text')
+			.attr("text-anchor", "middle") //start= 左寄せ, middle=中央寄せ, end=右寄せ
+			.attr("y", "0.5em") //ラベルのY座標を0.5文字分下げる
+			.text(function(d){ return d['都道府県名']})
+
+
+		updateGroup.merge(enterGroup)
+			.transition()
+			.duration(1000)
+			//.delay(function(d, i){ return i * 1000}) //遅延処理
+			.attr('transform', function(d, i){
+				var y =  i * (MaxRadius + margin) + margin;
+				return 'translate('+[MaxRadius, y] + ')';
+			})
+
+	}
+	
+
+	function ascendingSort(data){
+		data.sort(function(a, b){ return a['指標値(単位:人/10万人)'] - b['指標値(単位:人/10万人)']; })
+		render(data);
+	}
+
+	function descending(data){
+		data.sort(function(a, b){ return b['指標値(単位:人/10万人)'] - a['指標値(単位:人/10万人)']; })
+		render(data);
+	}
+	
+}
+	
+	
+</script>
+</body>
+</html>

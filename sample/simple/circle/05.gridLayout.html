@@ -24,7 +24,7 @@ text {
 
 <script src="//unpkg.com/d3@5.0.0/dist/d3.min.js"></script>    
 <script> 
-  //熱中症データの読み込み
+//熱中症データの読み込み
 d3.tsv("2017_3_6_16_38.tsv").then(main);
 								  
 function main(data) {
@@ -41,9 +41,12 @@ function main(data) {
 	var h = svg.node().clientHeight;
 	
 	var MaxRadius = 80; //サークルの最大半径を設定
-	var margin = MaxRadius/2; //サークル間のマージン
+
+	var windowWidth = window.innerWidth; //windowの横幅を取得
+	var MaxColumn = Math.floor( windowWidth/ (MaxRadius*2)); //横に並べる最大数を決定
+
     
-  svg.style("height", MaxRadius * data.lenght) //データの数だけsvgエリアの高さを広げる 
+	svg.style('height', MaxRadius * data.length + 'px') //データの数だけsvgエリアの高さを広げる 
 		
 	//データの最大値を取得
 	var dmax =  d3.max(data.map(function(d) { return d['指標値(単位:人/10万人)']; }))
@@ -57,18 +60,22 @@ function main(data) {
 	var enterCircle = updateCircle
 		.enter()
 		.append("circle")
-		.attr("cy", 0)
+		.attr("cx", 0)
 	
 	updateCircle.merge(enterCircle)
 		.attr("fill", "red")
-		.attr("cx", MaxRadius)
 		.transition()
 		.duration(1000)
 		//.delay(function(d, i){ return i * 1000}) //遅延処理
-		.attr("cy", function(d, i){
-			return i * (MaxRadius + margin) + margin;
+		.attr("cx", function(d, i){
+			var x =  (i % MaxColumn) * (MaxRadius*2) + MaxRadius;
+			return x
 		})
-		.attr("r",function(d){console.log(d['指標値(単位:人/10万人)']);	return rScale( d['指標値(単位:人/10万人)'] )})
+		.attr("cy", function(d, i){
+			var y = Math.floor(i / MaxColumn) *  (MaxRadius+ MaxRadius) + MaxRadius;
+			return y;
+		})
+		.attr("r",function(d){ return rScale( d['指標値(単位:人/10万人)'] )})
 	
 	
 }
