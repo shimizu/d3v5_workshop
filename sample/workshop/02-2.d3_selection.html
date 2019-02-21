@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='jp'>
+<head>
+
+</head>
+<body>
+<!--
+D3.jsのセレクションは、cssセレクターを用いて処理を反省するエレメントを設定します。
+
+下記は、02-1.css_selector.htmlでcssを用いて適用したのと同様のスタイルをD3を用いて動的に適用しています。
+
+-->
+
+
+    
+    
+<div></div>
+<div id="box"></div>
+<div class="block"></div>
+<div class="block"></div>
+
+
+<script src='//unpkg.com/d3@5.0.0/dist/d3.min.js'></script>
+<script>
+d3.selectAll("div")
+    .style("width", "200px")
+    .style("height", "100px")
+    .style("margin-top", "10px")
+    .style("background-color", "red");
+
+d3.selectAll("#box")
+    .style("background-color", "green");
+
+d3.selectAll(".block")
+    .style("background-color", "blue");     
+</script>
+</body>
+</html>

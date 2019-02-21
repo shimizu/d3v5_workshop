@@ -20,8 +20,6 @@ text {
 
 </head>
 <body>
-<p>2017年熱中症発生数（救急搬送）：総数 クリックでソート</p>
-<button id="btn">並べ替え</button>
 <svg></svg>
 
 <script src="//unpkg.com/d3@5.0.0/dist/d3.min.js"></script>    
@@ -38,94 +36,40 @@ function main(data) {
 	
 	
 	var svg = d3.select('svg');
+	//svg要素の高さと幅を取得する
 	var w =  svg.node().clientWidth;
 	var h = svg.node().clientHeight;
 	
-	var radius = (w/11); //サークルの半径
-	var margin = radius/4; //サークル間のマージン
+	var MaxRadius = 80; //サークルの最大半径を設定
+	var margin = MaxRadius/2; //サークル間のマージン
     
-    svg.style("height", radius*47)
-	
-	//ステージを設置
-	var stage = svg.append("g")
-		.attr("transform", "translate("+[radius/2,radius/2]+")") //topとleftを半径分ずらす
-	
-	//ソートを切り替える関数
-	var sort = SortToggle();
-	
+  svg.style("height", MaxRadius * data.lenght) //データの数だけsvgエリアの高さを広げる 
+		
 	//データの最大値を取得
 	var dmax =  d3.max(data.map(function(d) { return d['指標値(単位:人/10万人)']; }))
 
 	//0〜データの最大値までを、0〜半径の大きさに正規化
-	var rScale = d3.scaleSqrt().domain([0, dmax]).range([0, radius-margin]);
+	rScale = d3.scaleSqrt().domain([0, dmax]).range([0, MaxRadius]);
 
-	render(data)
+	var updateCircle = svg.selectAll("circle")
+		.data(data)
+		
+	var enterCircle = updateCircle
+		.enter()
+		.append("circle")
+		.attr("cy", 0)
 	
-	d3.select('#btn')
-	   .on('click', function(){ //bodyにクリックイベントを設置
-			render(sort(data));
-	   })
-
-	   
-	//エレメントをレンダリングする	   
-	function render(data){
-		//サークル、県名ラベル、発生数ラベルをまとめる親要素としてgroup要素をセレクトする
-		var updateGroup = stage.selectAll(".group").data(data, function(d){ return d['都道府県名']}); 
-		
-		var enterGroup = updateGroup.enter().append("g").attr("class", "group")
-		
-		//サークルをグループの直下に追加
-		enterGroup.append("circle")
-			.attr('opacity',0.6)
-			.attr('fill', 'red')
-			.attr('r', function(d){ return rScale(d['指標値(単位:人/10万人)']) })
-		
-		//県名ラベルをグループ直下に追加
-		enterGroup.append('text')
-			.attr("fill", "black")
-			.attr("y", "-0.5em")
-			.text(function(d){ return d['都道府県名'] })
-		
-		//発生数ラベルをグループ直下に追加
-		enterGroup.append('text')
-			.attr("fill", "black")
-			.attr("y", "0.5em")
-			.text(function(d){ return ~~(d['指標値(単位:人/10万人)']/10000) + "万人" })
-			
-		
-		//既存エレメントと追加エレメントの位置をアップデート
-		updateGroup.merge(enterGroup)
-			.attr("fill", "red")
-            // .transition()  //トランジションをさせたらどうなるか試してみよう
-	        //.duration(1000)  //トランジションの遷移にかかる時間を変えてみよう
-			//.delay(function(d, i){ return i * 50 }) //トランジションが開始される時間をエレメントごとに変えてみよう
-			.attr("transform", function(d, i){
-				return "translate("+[radius/2, i*radius]+")";
-			});
-			 
-	}
+	updateCircle.merge(enterCircle)
+		.attr("fill", "red")
+		.attr("cx", MaxRadius)
+		.transition()
+		.duration(1000)
+		//.delay(function(d, i){ return i * 1000}) //遅延処理
+		.attr("cy", function(d, i){
+			return i * (MaxRadius + margin) + margin;
+		})
+		.attr("r",function(d){console.log(d['指標値(単位:人/10万人)']);	return rScale( d['指標値(単位:人/10万人)'] )})
 	
-	
-	//ソートを切り替える
-	function SortToggle(){
-		var sortNext = 0;
-		return function (data){
-			switch(sortNext){
-				case 0:
-					data.sort(function(a,b){return b['指標値(単位:人/10万人)'] - a['指標値(単位:人/10万人)']});
-					break;
-				case 1:
-					data.sort(function(a,b){return a['地方自治体コード'] - b['地方自治体コード'] });
-					break;
-				
-			}
-			sortNext++;
-			if(sortNext > 1) sortNext = 0;
-			return data;
-		}
-
-	}
-		   
 	
 }
 	

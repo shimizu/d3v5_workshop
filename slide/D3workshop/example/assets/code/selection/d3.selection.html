@@ -4,12 +4,13 @@
 <div class="block"></div>
 
 <script>
-d3.select("div")
+d3.selectAll("div")
     .style("width", "200px")
     .style("height", "100px")
+    .style("margin-top", "10px")
     .style("background-color", "red");
 
-d3.select("#div")
+d3.selectAll("#div")
     .style("background-color", "green");
 
 d3.selectAll(".block")

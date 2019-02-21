@@ -28,8 +28,7 @@ svg {
     
 <button id="btn">update</button>       
 <svg id="stage">
-    <rect x="100" y="200" width="600" height="50" fill="#00ff00" stroke="#000000" />
-
+  
     <circle cx="200" cy="200" r="150" fill="red" fill-opacity="0.5" stroke="blue" stroke-width="2" />
 
     <line x1="20" y1="20"  x2="400" y2="400"  stroke="black" stroke-width="20"/>
@@ -37,7 +36,9 @@ svg {
     <text x="400" y="350" font-family="Verdana" font-size="45" fill="rgb(255, 120, 120)" >
         Hello, Inline SVG!
     </text>
-    
+
+    <rect x="100" y="200" width="600" height="50" fill="#00ff00" stroke="#000000" />
+  
 </svg>
 
 <script src="//unpkg.com/d3@5.0.0/dist/d3.min.js"></script>    
@@ -51,26 +52,23 @@ function updateElement(){
     //svgエレメントを選択
     var svg = d3.select("#stage");
 
-    //rect要素の属性値を更新
-    svg.select("rect")
-        .transition() //トランジション開始設定
-        .attr("y", 350);
-
     
     //circle要素の属性値を更新
     svg.select("circle")
         .transition() //トランジション開始設定
         .duration(5000) //開始から終了までの時間(ms)を設定
-        .attr("r", 50);
+        .attr("r", 50); //半径を50pxに
         
     //line要素の属性値を更新
     svg.select("line")
         .transition() //トランジション開始設定
         .delay(5000) //トランジションが開始されるまでの待ち時間(ms)
-        .attr("x1", 500)
+        .attr("x1", 500) 
         .attr("y1", 500)
         .attr("x2", 150)
-        .attr("y2", 600);
+        .attr("y2", 600)
+        .attr("stroke", "skyblue")
+        ;
     
     
             
@@ -84,6 +82,17 @@ function updateElement(){
         .attr("y", 500)
         .attr("font-size", 60)
         .text("アップデートされました！");
+
+    //rect要素の属性値を更新
+    svg.select("rect")
+        .attr("fill-opacity", 1) //透明率　1不透明 - 0透明
+        .transition() //トランジション開始設定
+        .attr("y", 350)
+        .attr("height", 600) //高さを600pxへ変更
+        .transition()
+        .duration(2000)
+        .attr("fill-opacity", 0.3) //透明率を1 -> -0,3へ変化させる
+        ;        
 
 }    
 </script>
